@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Krishi Sarathi — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --indigo:#6366F1;
+    --indigo-dark:#4F46E5;
+    --indigo-soft:#EEF0FF;
+    --green:#16A34A;
+    --green-soft:#EAF7EE;
+    --amber:#D97706;
+    --amber-soft:#FEF3E2;
+    --red:#DC2626;
+    --red-soft:#FDECEC;
+    --ink:#1E2233;
+    --ink-mute:#6B7280;
+    --line:#E7E9F2;
+    --bg:#F5F6FB;
+    --card:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Public Sans',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{display:flex;min-height:100vh;}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:264px;flex-shrink:0;background:var(--card);
+    border-right:1px solid var(--line);
+    padding:22px 16px;
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;padding:4px 8px 22px;}
+  .brand .logo{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--green),#0E7C3F);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;
+  }
+  .brand span{font-weight:800;font-size:16.5px;letter-spacing:.1px;}
+  .nav-group{margin-bottom:2px;}
+  .nav-label{
+    font-size:10.5px;font-weight:700;color:#A6ABC0;letter-spacing:.08em;
+    text-transform:uppercase;margin:16px 12px 6px;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 12px;border-radius:9px;color:#5A5F73;
+    font-size:14px;font-weight:500;text-decoration:none;cursor:pointer;
+  }
+  .nav-item:hover{background:#F3F4FA;color:var(--ink);}
+  .nav-item.active{background:var(--indigo-soft);color:var(--indigo-dark);font-weight:700;}
+  .nav-item .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.55;}
+  .nav-item .ic{width:17px;text-align:center;font-size:14px;}
+  .sub{padding-left:26px;}
+  .sub .nav-item{font-size:13.3px;padding:7px 12px;}
+
+  /* ---------- MAIN ---------- */
+  .main{flex:1;min-width:0;padding:22px 26px 40px;}
+  .topbar{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
+  }
+  .topbar h1{font-size:21px;margin:0;font-weight:800;}
+  .beta{
+    font-size:10.5px;font-weight:800;color:#fff;background:var(--red);
+    padding:2px 7px;border-radius:6px;vertical-align:middle;margin-left:8px;letter-spacing:.03em;
+  }
+  .topbar .sub-line{font-size:12.5px;color:var(--ink-mute);margin-top:3px;}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;background:var(--indigo-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--indigo-dark);font-weight:700;
+    position:relative;
+  }
+  .avatar::after{
+    content:'';position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;
+    background:var(--green);border:2px solid #fff;
+  }
+
+  /* KPI row */
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;}
+  .kpi{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 16px;
+  }
+  .kpi .k-label{font-size:11.5px;color:var(--ink-mute);font-weight:600;letter-spacing:.02em;}
+  .kpi .k-val{font-family:'JetBrains Mono',monospace;font-size:25px;font-weight:600;margin-top:6px;}
+  .kpi .k-delta{font-size:11px;margin-top:5px;font-weight:700;}
+  .up{color:var(--green);} .down{color:var(--red);} .flat{color:var(--ink-mute);}
+  .kpi.accent-green .k-val{color:var(--green);}
+  .kpi.accent-amber .k-val{color:var(--amber);}
+  .kpi.accent-red .k-val{color:var(--red);}
+  .kpi.accent-indigo .k-val{color:var(--indigo-dark);}
+
+  /* Filters */
+  .filters{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin-bottom:20px;
+  }
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-size:10.5px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:.05em;}
+  .field select,.field input{
+    border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13.5px;
+    font-family:inherit;color:var(--ink);min-width:140px;background:#fff;
+  }
+  .btn-primary{
+    background:var(--indigo);color:#fff;border:none;border-radius:9px;
+    padding:9px 18px;font-size:13.5px;font-weight:700;cursor:pointer;
+  }
+  .btn-primary:hover{background:var(--indigo-dark);}
+  .btn-ghost{
+    background:#fff;border:1px solid var(--line);color:var(--ink-mute);
+    border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;
+  }
+
+  /* two column layout */
+  .grid-2{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start;margin-bottom:18px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .card-head h2{font-size:15.5px;margin:0;font-weight:800;}
+  .card-head .link{font-size:12.5px;color:var(--indigo-dark);font-weight:700;text-decoration:none;}
+  .legend{display:flex;gap:14px;font-size:11.5px;color:var(--ink-mute);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  /* Attendance tree */
+  .tree{font-size:13.6px;}
+  .t-district{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 10px;border-radius:9px;cursor:pointer;
+  }
+  .t-district:hover{background:#F7F8FC;}
+  .t-district .left{display:flex;align-items:center;gap:9px;}
+  .caret{transition:transform .15s ease;color:#9AA0B4;font-size:11px;width:10px;}
+  .t-district.open .caret{transform:rotate(90deg);}
+  .status-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .status-dot.g{background:var(--green);} .status-dot.a{background:var(--amber);} .status-dot.r{background:var(--red);}
+  .t-name{font-weight:700;}
+  .t-meta{font-size:12px;color:var(--ink-mute);font-weight:500;}
+  .t-badge{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:600;
+    padding:2px 9px;border-radius:20px;
+  }
+  .t-badge.g{color:var(--green);background:var(--green-soft);}
+  .t-badge.a{color:var(--amber);background:var(--amber-soft);}
+  .t-badge.r{color:var(--red);background:var(--red-soft);}
+  .circles{max-height:0;overflow:hidden;padding-left:26px;transition:max-height .2s ease;}
+  .t-district.open + .circles{max-height:600px;}
+  .t-circle{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:8px 10px;border-radius:8px;
+  }
+  .t-circle:hover{background:#F7F8FC;}
+  .t-circle .left{display:flex;align-items:center;gap:9px;color:#3C4257;}
+  .divider{border:none;border-top:1px solid var(--line);margin:4px 0;}
+
+  /* Task monitoring */
+  .task-bars{display:flex;flex-direction:column;gap:12px;}
+  .task-row{display:grid;grid-template-columns:110px 1fr 40px;align-items:center;gap:10px;}
+  .task-row .t-label{font-size:12.8px;font-weight:600;color:#3C4257;}
+  .bar-track{height:9px;background:#F0F1F7;border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;}
+  .task-row .t-count{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;text-align:right;color:var(--ink-mute);}
+
+  .donut-wrap{display:flex;align-items:center;gap:20px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .donut{width:104px;height:104px;border-radius:50%;flex-shrink:0;
+    background:conic-gradient(var(--green) 0 63%, var(--indigo) 63% 80%, var(--amber) 80% 92%, var(--red) 92% 100%);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .donut-hole{width:66px;height:66px;background:#fff;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .donut-hole b{font-size:17px;font-family:'JetBrains Mono',monospace;}
+  .donut-hole small{font-size:9.5px;color:var(--ink-mute);font-weight:600;}
+  .donut-legend{font-size:12.3px;display:flex;flex-direction:column;gap:8px;}
+  .donut-legend .row{display:flex;align-items:center;gap:8px;}
+  .donut-legend i{width:8px;height:8px;border-radius:2px;display:inline-block;}
+  .donut-legend .n{margin-left:auto;font-family:'JetBrains Mono',monospace;font-weight:600;}
+
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:13.2px;}
+  thead th{
+    text-align:left;font-size:10.8px;color:var(--ink-mute);text-transform:uppercase;
+    letter-spacing:.05em;font-weight:700;padding:0 12px 10px;border-bottom:1px solid var(--line);
+  }
+  tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#FAFAFD;}
+  .officer{display:flex;align-items:center;gap:9px;}
+  .officer .ic{
+    width:26px;height:26px;border-radius:50%;background:var(--indigo-soft);color:var(--indigo-dark);
+    font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .pill.done{color:var(--green);background:var(--green-soft);}
+  .pill.submitted{color:var(--indigo-dark);background:var(--indigo-soft);}
+  .act-link{font-size:12px;color:var(--indigo-dark);font-weight:700;text-decoration:none;}
+
+  @media(max-width:1180px){
+    .kpis{grid-template-columns:repeat(3,1fr);}
+    .grid-2{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">🌱</div>
+      <span>krishi sarathi</span>
+    </div>
+
+    <div class="nav-group">
+      <a class="nav-item active"><span class="ic">⌂</span> Dashboard</a>
+      <a class="nav-item"><span class="ic">◍</span> Users</a>
+      <a class="nav-item"><span class="ic">▤</span> Master</a>
+      <a class="nav-item"><span class="ic">▤</span> Application Master</a>
+      <a class="nav-item"><span class="ic">⌘</span> Role Permissions Manager</a>
+      <a class="nav-item"><span class="ic">⌘</span> User Role Manager</a>
+      <a class="nav-item"><span class="ic">🗞</span> Agri News Manager</a>
+      <a class="nav-item"><span class="ic">▦</span> Activities</a>
+    </div>
+
+    <div class="nav-label">Report</div>
+    <div class="nav-group">
+      <a href="attendance.html" class="nav-item"><span class="dot"></span> Attendance</a>
+      <a href="activity-overview.html" class="nav-item"><span class="dot"></span> Activity Overview</a>
+      <a class="nav-item"><span class="dot"></span> Activity Summary</a>
+      <a class="nav-item"><span class="dot"></span> Completed Activity</a>
+      <a class="nav-item"><span class="dot"></span> Pest / Diseases</a>
+      <a class="nav-item"><span class="dot"></span> Query Summary</a>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <h1>Krishi Sarathi <span class="beta">BETA</span></h1>
+        <div class="sub-line">Overview for today · Sat, 09 Aug 2026</div>
+      </div>
+      <div class="avatar">JS</div>
+    </div>
+
+    <!-- ============ KPI STRIP ============ -->
+    <div class="kpis">
+      <div class="kpi">
+        <div class="k-label">TOTAL AEA</div>
+        <div class="k-val">1,248</div>
+        <div class="k-delta flat">across 27 districts</div>
+      </div>
+      <div class="kpi accent-green">
+        <div class="k-label">PRESENT TODAY</div>
+        <div class="k-val">1,041</div>
+        <div class="k-delta up">▲ 83.4% marked</div>
+      </div>
+      <div class="kpi accent-red">
+        <div class="k-label">ABSENT TODAY</div>
+        <div class="k-val">207</div>
+        <div class="k-delta down">▲ 16 vs yesterday</div>
+      </div>
+      <div class="kpi accent-indigo">
+        <div class="k-label">TASKS SUBMITTED</div>
+        <div class="k-val">3,562</div>
+        <div class="k-delta flat">this week</div>
+      </div>
+      <div class="kpi accent-green">
+        <div class="k-label">TASKS COMPLETED</div>
+        <div class="k-val">2,867</div>
+        <div class="k-delta up">80.5% completion</div>
+      </div>
+      <div class="kpi accent-amber">
+        <div class="k-label">PENDING REVIEW</div>
+        <div class="k-val">695</div>
+        <div class="k-delta down">submitted, not closed</div>
+      </div>
+    </div>
+
+    <!-- ============ FILTERS ============ -->
+    <div class="filters">
+      <div class="field">
+        <label>District</label>
+        <select><option>All</option><option>Kamrup (Metro)</option><option>Nagaon</option><option>Dibrugarh</option></select>
+      </div>
+      <div class="field">
+        <label>ADO Circle</label>
+        <select><option>All</option></select>
+      </div>
+      <div class="field">
+        <label>From Date</label>
+        <input type="date" />
+      </div>
+      <div class="field">
+        <label>To Date</label>
+        <input type="date" />
+      </div>
+      <button class="btn-primary">Apply</button>
+      <button class="btn-ghost">Reset</button>
+    </div>
+
+    <!-- ============ ATTENDANCE + TASK MONITORING ============ -->
+    <div class="grid-2">
+
+      <!-- Attendance drill-down -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Attendance — District ▸ ADO Circle ▸ AEA</h2>
+          <a href="attendance.html" class="link">Full Report →</a>
+        </div>
+        <div class="legend" style="margin-bottom:12px;">
+          <span><i style="background:var(--green)"></i> ≥ 90% present</span>
+          <span><i style="background:var(--amber)"></i> 70–89% present</span>
+          <span><i style="background:var(--red)"></i> &lt; 70% present</span>
+        </div>
+
+        <div class="tree" id="tree">
+
+          <div class="t-district open" onclick="this.classList.toggle('open')">
+            <div class="left"><span class="caret">▶</span><span class="status-dot g"></span><span class="t-name">Kamrup (Metro)</span></div>
+            <div class="left"><span class="t-meta">96 / 104 AEA</span><span class="t-badge g">92%</span></div>
+          </div>
+          <div class="circles">
+            <div class="t-circle"><div class="left">Guwahati ADO Circle</div><span class="t-badge g">95%</span></div>
+            <div class="t-circle"><div class="left">Chandrapur ADO Circle</div><span class="t-badge g">90%</span></div>
+            <div class="t-circle"><div class="left">Rani ADO Circle</div><span class="t-badge a">78%</span></div>
+          </div>
+          <hr class="divider" />
+
+          <div class="t-district" onclick="this.classList.toggle('open')">
+            <div class="left"><span class="caret">▶</span><span class="status-dot a"></span><span class="t-name">Nagaon</span></div>
+            <div class="left"><span class="t-meta">71 / 96 AEA</span><span class="t-badge a">74%</span></div>
+          </div>
+          <div class="circles">
+            <div class="t-circle"><div class="left">Nagaon Sadar ADO Circle</div><span class="t-badge a">76%</span></div>
+            <div class="t-circle"><div class="left">Kaliabor ADO Circle</div><span class="t-badge a">71%</span></div>
+            <div class="t-circle"><div class="left">Rupahi ADO Circle</div><span class="t-badge r">64%</span></div>
+          </div>
+          <hr class="divider" />
+
+          <div class="t-district" onclick="this.classList.toggle('open')">
+            <div class="left"><span class="caret">▶</span><span class="status-dot r"></span><span class="t-name">Dhemaji</span></div>
+            <div class="left"><span class="t-meta">33 / 58 AEA</span><span class="t-badge r">57%</span></div>
+          </div>
+          <div class="circles">
+            <div class="t-circle"><div class="left">Dhemaji ADO Circle</div><span class="t-badge r">55%</span></div>
+            <div class="t-circle"><div class="left">Sissiborgaon ADO Circle</div><span class="t-badge r">60%</span></div>
+          </div>
+          <hr class="divider" />
+
+          <div class="t-district" onclick="this.classList.toggle('open')">
+            <div class="left"><span class="caret">▶</span><span class="status-dot g"></span><span class="t-name">Dibrugarh</span></div>
+            <div class="left"><span class="t-meta">88 / 92 AEA</span><span class="t-badge g">96%</span></div>
+          </div>
+          <div class="circles">
+            <div class="t-circle"><div class="left">Dibrugarh Sadar ADO Circle</div><span class="t-badge g">97%</span></div>
+            <div class="t-circle"><div class="left">Tengakhat ADO Circle</div><span class="t-badge g">94%</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Task monitoring -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Task Monitoring</h2>
+          <a href="activity-overview.html" class="link">Full Report →</a>
+        </div>
+
+        <div class="task-bars">
+          <div class="task-row">
+            <div class="t-label">Submitted</div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--indigo);"></div></div>
+            <div class="t-count">3,562</div>
+          </div>
+          <div class="task-row">
+            <div class="t-label">Completed</div>
+            <div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--green);"></div></div>
+            <div class="t-count">2,867</div>
+          </div>
+        </div>
+
+        <div class="donut-wrap">
+          <div class="donut" style="background:conic-gradient(var(--green) 0 80%, var(--indigo) 80% 100%);">
+            <div class="donut-hole"><b>80%</b><small>COMPLETED</small></div>
+          </div>
+          <div class="donut-legend">
+            <div class="row"><i style="background:var(--green)"></i> Completed <span class="n">80%</span></div>
+            <div class="row"><i style="background:var(--indigo)"></i> Submitted, pending <span class="n">20%</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============ DISEASE / PEST SURVEILLANCE ============ -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-head">
+        <h2>Disease / Pest Surveillance</h2>
+        <a href="#" class="link">Full Report →</a>
+      </div>
+      <div style="font-size:12.5px;color:var(--red);font-weight:700;margin-bottom:14px;">
+        Last Issue Diagnosed: Paddy Blast, at Sissiborgaon, Dhemaji on 08-08-2026, 05:31 PM
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:16px;">
+        <!-- summary table -->
+        <div style="border:1px solid var(--line);border-radius:10px;max-height:340px;overflow:auto;">
+          <table>
+            <thead><tr><th>District</th><th>Disease</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2" style="font-weight:700;">Dhemaji (14)</td><td>Paddy Blast (9)</td></tr>
+              <tr><td>Brown Plant Hopper (5)</td></tr>
+              <tr><td rowspan="2" style="font-weight:700;">Nagaon (11)</td><td>Bacterial Leaf Blight (7)</td></tr>
+              <tr><td>Stem Borer (4)</td></tr>
+              <tr><td style="font-weight:700;">Kamrup (Metro) (3)</td><td>Sheath Blight (3)</td></tr>
+              <tr><td rowspan="2" style="font-weight:700;">Dibrugarh (6)</td><td>Paddy Blast (4)</td></tr>
+              <tr><td>Leaf Folder (2)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- map placeholder -->
+        <div style="position:relative;border-radius:10px;overflow:hidden;height:340px;
+             background:linear-gradient(135deg,#E9EEE1 0%,#DDE7D2 45%,#CFE0DE 100%);border:1px solid var(--line);">
+          <div style="position:absolute;top:10px;left:12px;font-size:11px;font-weight:700;color:#5C6B4E;background:#fff;padding:3px 9px;border-radius:6px;">Assam — Mapbox view</div>
+          <span style="position:absolute;top:38%;left:22%;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff;"></span>
+          <span style="position:absolute;top:52%;left:47%;width:12px;height:12px;border-radius:50%;background:var(--amber);border:2px solid #fff;"></span>
+          <span style="position:absolute;top:30%;left:60%;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff;"></span>
+          <span style="position:absolute;top:66%;left:34%;width:12px;height:12px;border-radius:50%;background:var(--amber);border:2px solid #fff;"></span>
+          <div style="position:absolute;bottom:10px;right:12px;font-size:10.5px;color:#5C6B4E;">Wire to Mapbox using your existing config('app.mapbox_api_key')</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RECENT TASK DETAILS TABLE ============ -->
+    <div class="card">
+      <div class="card-head">
+        <h2>Recent Task Submissions</h2>
+        <a href="activity-overview.html" class="link">View All →</a>
+      </div>
+      <table>
+        <thead>
+          <tr><th>#</th><th>Title</th><th>Officer</th><th>Submitted At</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Fertilizer Stock Verification</td>
+            <td><div class="officer"><span class="ic">RB</span> Ritu Bora — Guwahati ADO Circle</div></td>
+            <td>09-08-2026, 10:12 AM</td>
+            <td><span class="pill done">Completed</span></td>
+            <td><a class="act-link" href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Farmer Field School — Batch 3</td>
+            <td><div class="officer"><span class="ic">PD</span> Pranjal Das — Nagaon Sadar ADO Circle</div></td>
+            <td>09-08-2026, 09:47 AM</td>
+            <td><span class="pill submitted">Submitted</span></td>
+            <td><a class="act-link" href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Pest Surveillance — Paddy Blast</td>
+            <td><div class="officer"><span class="ic">MK</span> Manash Kalita — Dhemaji ADO Circle</div></td>
+            <td>08-08-2026, 05:31 PM</td>
+            <td><span class="pill submitted">Submitted</span></td>
+            <td><a class="act-link" href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Soil Health Card Distribution</td>
+            <td><div class="officer"><span class="ic">SN</span> Simanta Nath — Dibrugarh Sadar ADO Circle</div></td>
+            <td>08-08-2026, 02:18 PM</td>
+            <td><span class="pill submitted">Submitted</span></td>
+            <td><a class="act-link" href="#">View</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Scheme Awareness Camp — PM-KISAN</td>
+            <td><div class="officer"><span class="ic">AB</span> Anima Baruah — Rani ADO Circle</div></td>
+            <td>08-08-2026, 11:02 AM</td>
+            <td><span class="pill done">Completed</span></td>
+            <td><a class="act-link" href="#">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>
