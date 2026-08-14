@@ -1,211 +1,882 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Present Details | Krishi Sarathi</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total AEA — Krishi Sarathi</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
+
 <style>
-:root{--g:#238b45;--gs:#edf8f0;--b:#536ee8;--t:#27313d;--m:#74808d;--bd:#e5e9ee;--bg:#f6f8fa;--w:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:"Public Sans",Arial,sans-serif}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:238px;background:#fff;border-right:1px solid var(--bd);padding:20px 12px}
-.brand{display:flex;gap:10px;align-items:center;font-weight:700;font-size:18px;padding:4px 10px 23px}
-.brand i{width:35px;height:35px;border-radius:9px;background:var(--gs);display:grid;place-items:center;font-style:normal}
-.nav a{display:flex;gap:10px;align-items:center;padding:10px 11px;margin:2px 0;border-radius:8px;color:#606a76;text-decoration:none;font-size:13px}
-.nav a.active,.nav a:hover{background:var(--gs);color:var(--g);font-weight:600}
-.nav a i{font-size:18px}.nav-title{margin:17px 11px 7px;color:#9aa3ad;font-size:10px;font-weight:700;text-transform:uppercase}
-.main{margin-left:238px;min-height:100vh}.top{height:64px;background:#fff;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
-.search{display:flex;gap:8px;align-items:center;color:#9aa2ad}.search input{border:0;outline:0;background:transparent;width:230px}
-.avatar-top{width:34px;height:34px;border-radius:50%;background:#edf1ff;color:#5363a4;display:grid;place-items:center;font-size:12px;font-weight:700}
-.content{max-width:1450px;margin:auto;padding:25px 30px}
-.crumb{font-size:12px;color:#8c95a0;margin-bottom:10px}.crumb a{color:var(--g);text-decoration:none}
-h1{font-size:24px;margin:0 0 5px}.sub{font-size:13px;color:var(--m);margin:0}
-.back{display:inline-flex;gap:5px;align-items:center;color:var(--g);font-size:12px;text-decoration:none;margin:15px 0 18px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:16px}
-.card{background:#fff;border:1px solid var(--bd);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,40,.03)}
-.kpi{padding:16px 18px}.label{font-size:10px;color:var(--m);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}.value{font-size:25px;font-weight:700}.note{font-size:11px;color:#929aa5;margin-top:5px}
-.filter{padding:17px 18px;margin-bottom:16px}.fhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.ftitle{font-size:14px;font-weight:600}.fnote{font-size:11px;color:#929aa5}
-.filters{display:grid;grid-template-columns:1fr 1fr 1.5fr auto;gap:12px;align-items:end}.field label{display:block;font-size:11px;color:#66717e;font-weight:600;margin-bottom:6px}
-select,input{width:100%;height:40px;border:1px solid #dce2e8;border-radius:7px;padding:0 11px;background:#fff;font:inherit;font-size:12px;outline:0}
-.btn{height:40px;border:1px solid var(--bd);background:#fff;border-radius:7px;padding:0 14px;font:inherit;font-size:12px;cursor:pointer}.btn.primary{background:var(--b);color:#fff;border-color:var(--b)}
-.table{overflow:hidden}.thead{padding:15px 18px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;gap:12px}
-.ttitle{font-size:14px;font-weight:600}.tsub{font-size:11px;color:#929aa5;margin-top:3px}.tools{display:flex;gap:7px;align-items:center}.tools input{width:220px;height:37px}
-.wrap{overflow:auto}table{width:100%;min-width:900px;border-collapse:collapse}th{padding:11px 16px;background:#fafbfc;color:#77818d;font-size:10px;text-transform:uppercase;text-align:left}td{padding:12px 16px;border-top:1px solid #eef0f2;font-size:12px}
-.person{display:flex;align-items:center;gap:10px}.avatar{width:32px;height:32px;border-radius:50%;background:#edf1ff;color:#5265ad;display:grid;place-items:center;font-size:10px;font-weight:700}.person small{display:block;color:#9aa2ad;margin-top:2px;font-size:10px}
-.loc{display:inline-flex;gap:4px;align-items:center;color:#6b7480;font-size:11px}.status{display:inline-flex;padding:4px 8px;border-radius:20px;background:#eaf7ee;color:#218a45;font-size:10px;font-weight:600}
-.icon{width:30px;height:30px;border:1px solid var(--bd);background:#fff;border-radius:6px;margin-right:4px;cursor:pointer;color:#667280}.icon:hover{color:var(--g);background:#fafcfb}
-.pager{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--bd);font-size:11px;color:#8b949f}
-.empty{display:none;padding:35px;text-align:center;color:#8b949f;font-size:12px}.foot{text-align:center;color:#9aa2ad;font-size:10px;padding:18px 0}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(20,30,40,.35);align-items:center;justify-content:center;padding:20px;z-index:50}
-.modal{width:min(500px,100%);background:#fff;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.18);padding:20px}.modal h3{margin:0 0 16px}.detail{display:grid;grid-template-columns:1fr 1fr;gap:14px}.detail span{font-size:10px;color:#929aa5;text-transform:uppercase}.detail b{display:block;margin-top:4px;font-size:13px}
-@media(max-width:1080px){.sidebar{width:72px;padding:20px 8px}.brand span,.nav span,.nav-title{display:none}.main{margin-left:72px}.kpis{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 1fr}}
-@media(max-width:650px){.top{padding:0 15px}.content{padding:20px 15px}.kpis{grid-template-columns:1fr 1fr;gap:8px}.filters{grid-template-columns:1fr}.thead{align-items:flex-start;flex-direction:column}.tools{width:100%}.tools input{width:100%}}
+/* Page-specific CSS only. The common visual system comes from common.css,
+   exactly like the uploaded dashboard. */
+.chart-height { min-height:560px; }
+.table-progress { min-width:130px; height:7px; }
+.stat-card { cursor:default; }
+@media(max-width:767px) {
+  .chart-height { min-height:430px; }
+}
 </style>
+
+<style>
+:root{
+  --primary:#696cff;
+  --success:#28c76f;
+  --danger:#ff424f;
+  --warning:#ff9f43;
+  --info:#00bad1;
+  --body:#f5f5f9;
+  --card:#fff;
+  --text:#566a7f;
+  --muted:#697a8d;
+  --border:#d9dee3;
+  --sidebar:#fff;
+  --sidebar-width:260px;
+  --navbar-height:62px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:"Public Sans",Arial,sans-serif}
+body{background:var(--body);color:var(--text);font-size:14px}
+a{text-decoration:none}
+button,input{font-family:inherit}
+
+/* Layout */
+.menu{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-width);
+  background:var(--sidebar);border-right:1px solid #e7e7e8;
+  z-index:1030;overflow-y:auto;padding:14px 12px;
+}
+.layout-page{margin-left:var(--sidebar-width);min-height:100vh}
+.navbar{
+  height:var(--navbar-height);background:#fff;border-bottom:1px solid #e7e7e8;
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+  position:sticky;top:0;z-index:1000;
+}
+.content-wrapper{padding:22px 24px;max-width:1600px;margin:auto}
+.menu-toggle{
+  border:0;background:transparent;color:#697a8d;font-size:24px;
+  display:none;cursor:pointer;
+}
+.app-brand{
+  height:52px;display:flex;align-items:center;gap:10px;
+  padding:0 12px;color:#566a7f;
+}
+.app-brand-logo{
+  width:34px;height:34px;border-radius:8px;background:#e9e9ff;
+  display:grid;place-items:center;font-size:18px;
+}
+.app-brand-text{font-size:18px;font-weight:700;text-transform:capitalize}
+.menu-inner{list-style:none;margin:0;padding:0}
+.menu-item{list-style:none;margin:2px 0}
+.menu-link{
+  min-height:42px;padding:9px 13px;border-radius:7px;
+  display:flex;align-items:center;gap:12px;color:#697a8d;
+  font-size:13px;transition:.15s ease;
+}
+.menu-link:hover,.menu-item.active .menu-link{
+  background:#f0f0ff;color:var(--primary);
+}
+.menu-item.active .menu-link{font-weight:600}
+.menu-icon{font-size:19px}
+.menu-header{
+  padding:18px 13px 7px;color:#a1acb8;font-size:11px;
+  font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+}
+
+/* Navbar */
+.navbar-search{
+  width:280px;display:flex;align-items:center;gap:8px;color:#a1acb8;
+}
+.navbar-search input{
+  width:100%;border:0;outline:0;background:transparent;color:#566a7f;
+}
+.avatar-initial{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:#e9e9ff;color:#5b5fca;font-size:12px;font-weight:700;
+}
+.bx-bell{cursor:pointer}
+
+/* Bootstrap-like helpers */
+.d-flex{display:flex!important}
+.align-items-center{align-items:center!important}
+.align-items-start{align-items:flex-start!important}
+.justify-content-between{justify-content:space-between!important}
+.flex-wrap{flex-wrap:wrap!important}
+.gap-2{gap:.5rem!important}
+.gap-3{gap:1rem!important}
+.mb-0{margin-bottom:0!important}
+.mb-3{margin-bottom:1rem!important}
+.mt-1{margin-top:.25rem!important}
+.mt-3{margin-top:1rem!important}
+.ms-1{margin-left:.25rem!important}
+.text-muted{color:#8592a3!important}
+.text-primary{color:var(--primary)!important}
+.text-secondary{color:#8592a3!important}
+.text-center{text-align:center!important}
+.small{font-size:12px!important}
+.fw-semibold{font-weight:600!important}
+.fs-5{font-size:1.25rem!important}
+
+/* Grid */
+.row{display:flex;flex-wrap:wrap;margin-left:-7px;margin-right:-7px}
+.row>*{padding-left:7px;padding-right:7px}
+.g-3{row-gap:14px}
+.col-12{width:100%}
+.col-6{width:50%}
+.col-md-5,.col-md-7{width:100%}
+.col-xl-3{width:100%}
+@media(min-width:768px){
+  .col-md-5{width:41.666667%}
+  .col-md-7{width:58.333333%}
+}
+@media(min-width:576px){
+  .col-sm-6{width:50%}
+}
+@media(min-width:1200px){
+  .col-xl-3{width:25%}
+}
+
+/* Typography */
+.breadcrumb-style1{font-size:12px;margin-bottom:8px}
+.breadcrumb-style1 a{color:var(--primary)}
+.sep{padding:0 7px;color:#b5bdc8}
+.page-title{font-size:24px;color:#566a7f;font-weight:600;margin:0 0 4px}
+.page-sub{font-size:13px;color:#8592a3;margin:0}
+.back-link{
+  display:inline-flex;align-items:center;gap:5px;
+  color:var(--primary);font-size:12px;margin:8px 0 18px;
+}
+
+/* Cards */
+.card{
+  background:var(--card);border:1px solid #e7e7e8;
+  border-radius:8px;box-shadow:0 .125rem .25rem rgba(161,172,184,.08);
+}
+.card-header{
+  padding:14px 18px;background:#fff;border-bottom:1px solid #eceef1;
+  color:#566a7f;font-size:14px;font-weight:600;
+}
+.card-body{padding:18px}
+.h-100{height:100%!important}
+
+/* KPI cards */
+.stat-card .card-body{
+  min-height:126px;display:flex;justify-content:space-between;align-items:flex-start;
+}
+.stat-label{
+  color:#8592a3;font-size:12px;text-transform:uppercase;
+  letter-spacing:.03em;margin-bottom:6px;
+}
+.stat-value{
+  color:#566a7f;font-size:26px;line-height:1.15;font-weight:600;
+}
+.stat-sub{font-size:12px;margin-top:5px}
+.stat-link{
+  color:var(--primary);font-size:11px;margin-top:10px;font-weight:500;
+}
+.avatar-stat{
+  width:42px;height:42px;border-radius:8px;display:grid;place-items:center;
+  font-size:21px;flex:0 0 auto;
+}
+.bg-label-primary{background:#e9e9ff!important;color:var(--primary)!important}
+.bg-label-success{background:#e8f8ee!important;color:var(--success)!important}
+.bg-label-danger{background:#ffe8ea!important;color:var(--danger)!important}
+.bg-label-warning{background:#fff0df!important;color:#ff9f43!important}
+.bg-label-info{background:#e2f8fb!important;color:var(--info)!important}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  border:1px solid transparent;border-radius:5px;padding:6px 12px;
+  font-size:12px;line-height:1.5;cursor:pointer;background:#fff;
+}
+.btn-sm{padding:5px 9px;font-size:11px}
+.btn-outline-secondary{border-color:#d9dee3;color:#697a8d}
+.btn-outline-secondary:hover{background:#f5f5f9}
+.badge{
+  display:inline-block;padding:.25em .55em;border-radius:4px;
+  font-size:10px;font-weight:600;
+}
+.bg-danger{background:var(--danger)!important;color:#fff!important}
+
+/* Tables */
+.table-responsive{overflow-x:auto}
+.table{
+  width:100%;border-collapse:collapse;color:#566a7f;
+}
+.table th{
+  background:#fafafa;color:#566a7f;font-size:11px;
+  text-transform:uppercase;letter-spacing:.04em;font-weight:600;
+  padding:11px 16px;border-bottom:1px solid #e7e7e8;text-align:left;
+}
+.table td{
+  padding:12px 16px;border-bottom:1px solid #eceef1;
+  font-size:12px;vertical-align:middle;
+}
+.table tbody tr:hover{background:#fafbff}
+.table .text-primary{color:var(--primary)!important}
+.filter-bar input{
+  height:36px;border:1px solid #d9dee3;border-radius:5px;
+  padding:6px 10px;outline:none;font-size:12px;color:#566a7f;
+}
+.filter-bar input:focus{border-color:#696cff;box-shadow:0 0 0 .15rem rgba(105,108,255,.12)}
+.badge-pill{
+  display:inline-block;padding:4px 8px;border-radius:20px;
+  font-size:10px;font-weight:600;white-space:nowrap;
+}
+.progress{
+  width:100%;background:#e9ecef;border-radius:10px;overflow:hidden;
+}
+.progress-bar{height:100%;border-radius:10px}
+.progress-bar.bg-success{background:var(--success)!important}
+.progress-bar.bg-warning{background:var(--warning)!important}
+.progress-bar.bg-danger{background:var(--danger)!important}
+
+/* Chart */
+.chart-height{min-height:560px}
+#aeaBarChart{width:100%}
+#aeaStatusDonut{width:100%;min-height:250px}
+
+/* Footer */
+.footer-note{
+  color:#a1acb8;text-align:center;font-size:11px;padding:18px 0 4px;
+}
+
+/* Mobile */
+@media(max-width:1199px){
+  :root{--sidebar-width:230px}
+}
+@media(max-width:991px){
+  .menu{transform:translateX(-100%);transition:.2s ease}
+  .menu.open{transform:translateX(0)}
+  .layout-page{margin-left:0}
+  .menu-toggle{display:block}
+  .navbar{gap:12px}
+  .navbar-search{flex:1;max-width:320px}
+}
+@media(max-width:767px){
+  .content-wrapper{padding:16px}
+  .navbar{padding:0 15px}
+  .navbar-search{width:180px}
+  .stat-card .card-body{min-height:110px}
+  .stat-value{font-size:22px}
+  .chart-height{min-height:430px}
+  .card-header{padding:12px 14px}
+  .card-body{padding:14px}
+  .filter-bar input{min-width:140px!important;width:100%}
+}
+@media(max-width:480px){
+  .navbar-search{display:none}
+  .page-title{font-size:20px}
+  .stat-value{font-size:20px}
+}
+</style>
+
 </head>
+
 <body>
-<aside class="sidebar">
-<div class="brand"><i>🌱</i><span>Krishi Sarathi</span></div>
-<nav class="nav">
-<a href="dashboard.html"><i class="bx bx-home-circle"></i><span>Dashboard</span></a>
-<a href="#"><i class="bx bx-group"></i><span>Users</span></a><a href="#"><i class="bx bx-collection"></i><span>Master</span></a>
-<a href="#"><i class="bx bx-layer"></i><span>Application Master</span></a><a href="#"><i class="bx bx-key"></i><span>Role Permissions</span></a>
-<a href="#"><i class="bx bx-id-card"></i><span>User Roles</span></a><a href="#"><i class="bx bx-news"></i><span>Agri News</span></a>
-<a href="#"><i class="bx bx-task"></i><span>Activities</span></a>
-<div class="nav-title">Reports</div>
-<a class="active" href="attendance-report.html"><i class="bx bx-user-check"></i><span>Attendance</span></a>
-<a href="task-monitoring.html"><i class="bx bx-bar-chart-alt-2"></i><span>Activity Overview</span></a>
-<a href="#"><i class="bx bx-line-chart"></i><span>Activity Summary</span></a>
-<a href="recent-submissions.html"><i class="bx bx-check-double"></i><span>Completed Activity</span></a>
-<a href="disease-surveillance.html"><i class="bx bx-bug"></i><span>Pest / Diseases</span></a>
-<a href="#"><i class="bx bx-help-circle"></i><span>Query Summary</span></a>
-</nav>
+
+<aside class="menu" id="layoutMenu">
+  <a href="dashboard.html" class="app-brand">
+    <div class="app-brand-logo">🌱</div>
+    <span class="app-brand-text">krishi sarathi</span>
+  </a>
+
+  <ul class="menu-inner">
+    <li class="menu-item active"><a href="dashboard.html" class="menu-link"><i class="menu-icon bx bx-home-circle"></i><div>Dashboard</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-group"></i><div>Users</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-collection"></i><div>Master</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-layer"></i><div>Application Master</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-key"></i><div>Role Permissions Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-id-card"></i><div>User Role Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-news"></i><div>Agri News Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-task"></i><div>Activities</div></a></li>
+    <li class="menu-header">Report</li>
+    <li class="menu-item"><a href="district_wise_circle_aea_drilldown.html" class="menu-link"><i class="menu-icon bx bx-user-check"></i><div>Attendance</div></a></li>
+    <li class="menu-item"><a href="task-monitoring.html" class="menu-link"><i class="menu-icon bx bx-bar-chart-alt-2"></i><div>Activity Overview</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-line-chart"></i><div>Activity Summary</div></a></li>
+    <li class="menu-item"><a href="recent-submissions.html" class="menu-link"><i class="menu-icon bx bx-check-double"></i><div>Completed Activity</div></a></li>
+    <li class="menu-item"><a href="disease-surveillance.html" class="menu-link"><i class="menu-icon bx bx-bug"></i><div>Pest / Diseases</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-help-circle"></i><div>Query Summary</div></a></li>
+  </ul>
 </aside>
 
-<main class="main">
-<header class="top"><div class="search"><i class="bx bx-search"></i><input placeholder="Search..."></div><div class="avatar-top">JS</div></header>
-<section class="content">
-<div class="crumb"><a href="dashboard.html">Dashboard</a> / <a href="attendance-report.html">Attendance</a> / Present Details</div>
-<h1>Present Details</h1><p class="sub">Detailed list of AEA who marked attendance as present · 09 Aug 2026</p>
-<a class="back" href="attendance-report.html"><i class="bx bx-arrow-back"></i> Back to Attendance</a>
+<div class="layout-page">
 
-<div class="kpis">
-<div class="card kpi"><div class="label">Present Today</div><div class="value">1,041</div><div class="note">Attendance marked present</div></div>
-<div class="card kpi"><div class="label">Attendance Rate</div><div class="value">83.4%</div><div class="note">Of 1,248 total AEA</div></div>
-<div class="card kpi"><div class="label">Displayed Records</div><div class="value" id="shown">14</div><div class="note">Records in this view</div></div>
-<div class="card kpi"><div class="label">Latest Marking</div><div class="value">10:08 AM</div><div class="note">Latest shown record</div></div>
+<nav class="navbar">
+  <button class="menu-toggle" id="menuToggle"><i class="bx bx-menu"></i></button>
+  <div class="navbar-search">
+    <i class="bx bx-search"></i>
+    <input type="text" id="globalSearch" placeholder="Search...">
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <i class="bx bx-bell fs-5 text-secondary"></i>
+    <div class="avatar-initial">JS</div>
+  </div>
+</nav>
+
+<div class="content-wrapper">
+
+  <div class="breadcrumb-style1 text-muted">
+    <a href="dashboard.html">Dashboard</a><span class="sep">/</span>
+    <a href="attendance-report.html">Attendance</a><span class="sep">/</span>
+    Present Details
+  </div>
+
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+    <div>
+      <h4 class="page-title">Present Details</h4>
+      <p class="page-sub">Detailed list of AEA marked present · 09 Aug 2026</p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-sm btn-outline-secondary" id="printBtn">
+        <i class="bx bx-printer"></i> Print
+      </button>
+      <button class="btn btn-sm btn-outline-secondary" id="exportBtn">
+        <i class="bx bx-download"></i> Export CSV
+      </button>
+    </div>
+  </div>
+
+  <a href="attendance-report.html" class="back-link">
+    <i class="bx bx-arrow-back"></i> Back to attendance
+  </a>
+
+  <div class="row g-3 mb-3">
+    <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card stat-card h-100">
+        <div class="card-body">
+          <div>
+            <div class="stat-label">Present Today</div>
+            <div class="stat-value">1,041</div>
+            <div class="stat-sub text-muted">Marked present</div>
+          </div>
+          <div class="avatar-stat bg-label-success"><i class="bx bx-user-check"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card stat-card h-100">
+        <div class="card-body">
+          <div>
+            <div class="stat-label">Attendance Rate</div>
+            <div class="stat-value">83.4%</div>
+            <div class="stat-sub text-muted">Of 1,248 total AEA</div>
+          </div>
+          <div class="avatar-stat bg-label-primary"><i class="bx bx-pie-chart-alt-2"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card stat-card h-100">
+        <div class="card-body">
+          <div>
+            <div class="stat-label">Latest Marking</div>
+            <div class="stat-value">10:08 AM</div>
+            <div class="stat-sub text-muted">Latest shown record</div>
+          </div>
+          <div class="avatar-stat bg-label-info"><i class="bx bx-time-five"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6 col-12">
+      <div class="card stat-card h-100">
+        <div class="card-body">
+          <div>
+            <div class="stat-label">Displayed Records</div>
+            <div class="stat-value" id="recordCount">14</div>
+            <div class="stat-sub text-muted">Current filtered view</div>
+          </div>
+          <div class="avatar-stat bg-label-warning"><i class="bx bx-list-check"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+      <div>
+        <div>Present AEA List</div>
+        <div class="small text-muted mt-1">Search and filter today's present attendance records.</div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <select id="circleFilter" style="height:36px;border:1px solid #d9dee3;border-radius:5px;padding:6px 10px;font-size:12px;color:#566a7f;">
+          <option value="all">All ADO Circles</option>
+        </select>
+
+        <select id="locationFilter" style="height:36px;border:1px solid #d9dee3;border-radius:5px;padding:6px 10px;font-size:12px;color:#566a7f;">
+          <option value="all">All locations</option>
+          <option value="on field">On field</option>
+        </select>
+
+        <div class="filter-bar">
+          <input id="searchInput" type="text" placeholder="Search AEA or circle..." style="min-width:210px;">
+        </div>
+
+        <button class="btn btn-sm btn-outline-secondary" id="clearBtn">
+          <i class="bx bx-reset"></i> Clear
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>AEA Name</th>
+            <th>ADO Circle</th>
+            <th>Marked At</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="presentTable">
+
+            <tr data-search="debojit pathak morigaon ado circle on field">
+              <td>1</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">DP</span>
+                <div>
+                  <div class="fw-semibold">Debojit Pathak</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Morigaon ADO Circle</td>
+              <td class="fw-semibold">09:38 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Debojit Pathak" data-circle="Morigaon ADO Circle"
+                        data-time="09:38 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="anima barman tamulpur ado circle on field">
+              <td>2</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">AB</span>
+                <div>
+                  <div class="fw-semibold">Anima Barman</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Tamulpur ADO Circle</td>
+              <td class="fw-semibold">09:38 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Anima Barman" data-circle="Tamulpur ADO Circle"
+                        data-time="09:38 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="pallabi pathak dhemaji ado circle on field">
+              <td>3</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">PP</span>
+                <div>
+                  <div class="fw-semibold">Pallabi Pathak</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Dhemaji ADO Circle</td>
+              <td class="fw-semibold">09:44 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Pallabi Pathak" data-circle="Dhemaji ADO Circle"
+                        data-time="09:44 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="hemanta bora haflong ado circle on field">
+              <td>4</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">HB</span>
+                <div>
+                  <div class="fw-semibold">Hemanta Bora</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Haflong ADO Circle</td>
+              <td class="fw-semibold">09:10 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Hemanta Bora" data-circle="Haflong ADO Circle"
+                        data-time="09:10 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="mridul medhi golaghat ado circle on field">
+              <td>5</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">MM</span>
+                <div>
+                  <div class="fw-semibold">Mridul Medhi</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Golaghat ADO Circle</td>
+              <td class="fw-semibold">09:44 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Mridul Medhi" data-circle="Golaghat ADO Circle"
+                        data-time="09:44 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="kaberi boro morigaon ado circle on field">
+              <td>6</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">KB</span>
+                <div>
+                  <div class="fw-semibold">Kaberi Boro</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Morigaon ADO Circle</td>
+              <td class="fw-semibold">10:02 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Kaberi Boro" data-circle="Morigaon ADO Circle"
+                        data-time="10:02 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="juri medhi haflong ado circle on field">
+              <td>7</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">JM</span>
+                <div>
+                  <div class="fw-semibold">Juri Medhi</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Haflong ADO Circle</td>
+              <td class="fw-semibold">09:03 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Juri Medhi" data-circle="Haflong ADO Circle"
+                        data-time="09:03 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="ankur baruah golaghat ado circle on field">
+              <td>8</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">AB</span>
+                <div>
+                  <div class="fw-semibold">Ankur Baruah</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Golaghat ADO Circle</td>
+              <td class="fw-semibold">09:38 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Ankur Baruah" data-circle="Golaghat ADO Circle"
+                        data-time="09:38 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="kabita baruah diphu ado circle on field">
+              <td>9</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">KB</span>
+                <div>
+                  <div class="fw-semibold">Kabita Baruah</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Diphu ADO Circle</td>
+              <td class="fw-semibold">09:03 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Kabita Baruah" data-circle="Diphu ADO Circle"
+                        data-time="09:03 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="ankur bora mangaldai ado circle on field">
+              <td>10</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">AB</span>
+                <div>
+                  <div class="fw-semibold">Ankur Bora</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Mangaldai ADO Circle</td>
+              <td class="fw-semibold">09:44 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Ankur Bora" data-circle="Mangaldai ADO Circle"
+                        data-time="09:44 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="nilakshi kalita jorhat east ado circle on field">
+              <td>11</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">NK</span>
+                <div>
+                  <div class="fw-semibold">Nilakshi Kalita</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Jorhat East ADO Circle</td>
+              <td class="fw-semibold">10:02 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Nilakshi Kalita" data-circle="Jorhat East ADO Circle"
+                        data-time="10:02 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="nilakshi pathak nagaon sadar ado circle on field">
+              <td>12</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">NP</span>
+                <div>
+                  <div class="fw-semibold">Nilakshi Pathak</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Nagaon Sadar ADO Circle</td>
+              <td class="fw-semibold">09:51 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Nilakshi Pathak" data-circle="Nagaon Sadar ADO Circle"
+                        data-time="09:51 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="priyanka bora sonitpur north ado circle on field">
+              <td>13</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">PB</span>
+                <div>
+                  <div class="fw-semibold">Priyanka Bora</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Sonitpur North ADO Circle</td>
+              <td class="fw-semibold">09:38 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Priyanka Bora" data-circle="Sonitpur North ADO Circle"
+                        data-time="09:38 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+            <tr data-search="pallabi konwar silchar ado circle on field">
+              <td>14</td>
+              <td class="d-flex align-items-center gap-2">
+                <span class="avatar-sm bg-label-primary">PK</span>
+                <div>
+                  <div class="fw-semibold">Pallabi Konwar</div>
+                  <div class="small text-muted">Agriculture Extension Assistant</div>
+                </div>
+              </td>
+              <td>Silchar ADO Circle</td>
+              <td class="fw-semibold">10:08 AM</td>
+              <td><i class="bx bx-map-pin text-muted"></i> On field</td>
+              <td><span class="badge-pill bg-label-success">Present</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-secondary view-btn"
+                        data-name="Pallabi Konwar" data-circle="Silchar ADO Circle"
+                        data-time="10:08 AM" data-location="On field">
+                  <i class="bx bx-show"></i> View
+                </button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+
+      <div id="noResults" class="text-center text-muted py-4 d-none">
+        No present record found.
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+      <div class="small text-muted" id="tableInfo">Showing 1 to 14 of 14 records</div>
+      <div class="small text-muted">Present status · 09 Aug 2026</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam
+  </div>
+
+</div>
 </div>
 
-<div class="card filter">
-<div class="fhead"><div><div class="ftitle">Find Present AEA</div><div class="fnote">Filter by circle, location or officer.</div></div><div class="fnote">Today · 09 Aug 2026</div></div>
-<div class="filters">
-<div class="field"><label>ADO Circle</label><select id="circle"><option value="all">All ADO Circles</option></select></div>
-<div class="field"><label>Location</label><select id="loc"><option value="all">All locations</option><option value="On field">On field</option></select></div>
-<div class="field"><label>Search Officer</label><input id="q" placeholder="Search officer name or circle..."></div>
-<button class="btn" id="clear"><i class="bx bx-reset"></i> Clear</button>
-</div>
-</div>
-
-<div class="card table">
-<div class="thead"><div><div class="ttitle">Present AEA List</div><div class="tsub" id="sub">Showing all present records loaded for today.</div></div>
-<div class="tools"><button class="btn" id="print"><i class="bx bx-printer"></i> Print</button><button class="btn primary" id="csv"><i class="bx bx-download"></i> Export CSV</button><input id="search2" placeholder="Search list..."></div></div>
-
-<div class="wrap"><table><thead><tr><th>#</th><th>AEA Name</th><th>ADO Circle</th><th>Marked At</th><th>Location</th><th>Status</th><th>Action</th></tr></thead><tbody id="tbody"><tr data-search="debojit pathak morigaon ado circle on field">
-<td>1</td>
-<td><div class="person"><span class="avatar">DP</span><div><b>Debojit Pathak</b><small>AEA</small></div></div></td>
-<td>Morigaon ADO Circle</td><td>09:38 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="anima barman tamulpur ado circle on field">
-<td>2</td>
-<td><div class="person"><span class="avatar">AB</span><div><b>Anima Barman</b><small>AEA</small></div></div></td>
-<td>Tamulpur ADO Circle</td><td>09:38 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="pallabi pathak dhemaji ado circle on field">
-<td>3</td>
-<td><div class="person"><span class="avatar">PP</span><div><b>Pallabi Pathak</b><small>AEA</small></div></div></td>
-<td>Dhemaji ADO Circle</td><td>09:44 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="hemanta bora haflong ado circle on field">
-<td>4</td>
-<td><div class="person"><span class="avatar">HB</span><div><b>Hemanta Bora</b><small>AEA</small></div></div></td>
-<td>Haflong ADO Circle</td><td>09:10 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="mridul medhi golaghat ado circle on field">
-<td>5</td>
-<td><div class="person"><span class="avatar">MM</span><div><b>Mridul Medhi</b><small>AEA</small></div></div></td>
-<td>Golaghat ADO Circle</td><td>09:44 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="kaberi boro morigaon ado circle on field">
-<td>6</td>
-<td><div class="person"><span class="avatar">KB</span><div><b>Kaberi Boro</b><small>AEA</small></div></div></td>
-<td>Morigaon ADO Circle</td><td>10:02 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="juri medhi haflong ado circle on field">
-<td>7</td>
-<td><div class="person"><span class="avatar">JM</span><div><b>Juri Medhi</b><small>AEA</small></div></div></td>
-<td>Haflong ADO Circle</td><td>09:03 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="ankur baruah golaghat ado circle on field">
-<td>8</td>
-<td><div class="person"><span class="avatar">AB</span><div><b>Ankur Baruah</b><small>AEA</small></div></div></td>
-<td>Golaghat ADO Circle</td><td>09:38 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="kabita baruah diphu ado circle on field">
-<td>9</td>
-<td><div class="person"><span class="avatar">KB</span><div><b>Kabita Baruah</b><small>AEA</small></div></div></td>
-<td>Diphu ADO Circle</td><td>09:03 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="ankur bora mangaldai ado circle on field">
-<td>10</td>
-<td><div class="person"><span class="avatar">AB</span><div><b>Ankur Bora</b><small>AEA</small></div></div></td>
-<td>Mangaldai ADO Circle</td><td>09:44 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="nilakshi kalita jorhat east ado circle on field">
-<td>11</td>
-<td><div class="person"><span class="avatar">NK</span><div><b>Nilakshi Kalita</b><small>AEA</small></div></div></td>
-<td>Jorhat East ADO Circle</td><td>10:02 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="nilakshi pathak nagaon sadar ado circle on field">
-<td>12</td>
-<td><div class="person"><span class="avatar">NP</span><div><b>Nilakshi Pathak</b><small>AEA</small></div></div></td>
-<td>Nagaon Sadar ADO Circle</td><td>09:51 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="priyanka bora sonitpur north ado circle on field">
-<td>13</td>
-<td><div class="person"><span class="avatar">PB</span><div><b>Priyanka Bora</b><small>AEA</small></div></div></td>
-<td>Sonitpur North ADO Circle</td><td>09:38 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr><tr data-search="pallabi konwar silchar ado circle on field">
-<td>14</td>
-<td><div class="person"><span class="avatar">PK</span><div><b>Pallabi Konwar</b><small>AEA</small></div></div></td>
-<td>Silchar ADO Circle</td><td>10:08 AM</td><td><span class="loc"><i class="bx bx-map-pin"></i>On field</span></td>
-<td><span class="status">Present</span></td>
-<td><button class="icon view"><i class="bx bx-show"></i></button><button class="icon map"><i class="bx bx-map"></i></button></td>
-</tr></tbody></table><div class="empty" id="empty">No present record matches your filter.</div></div>
-<div class="pager"><span id="page">Showing 1 to 14 of 14 records</span><span>Page 1</span></div>
-</div>
-
-<div class="foot">Krishi Sarathi © 2026 — Directorate of Agriculture, Government of Assam</div>
-</section>
-</main>
-
-<div class="modal-bg" id="modal"><div class="modal"><button id="close" style="float:right;border:0;background:none;font-size:22px;cursor:pointer">&times;</button><h3>Present Attendance Details</h3><div class="detail"><div><span>AEA Name</span><b id="m1">—</b></div><div><span>Status</span><b>Present</b></div><div><span>ADO Circle</span><b id="m2">—</b></div><div><span>Marked At</span><b id="m3">—</b></div><div><span>Location</span><b id="m4">—</b></div><div><span>Date</span><b>09 Aug 2026</b></div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="common.js"></script>
 
 <script>
-const rows=[...document.querySelectorAll('#tbody tr')], circle=document.getElementById('circle'), loc=document.getElementById('loc'), q=document.getElementById('q'), s2=document.getElementById('search2');
-[...new Set(rows.map(r=>r.children[2].textContent.trim()))].sort().forEach(x=>circle.insertAdjacentHTML('beforeend',`<option value="${x}">${x}</option>`));
-function apply(){
- const c=circle.value.toLowerCase(), l=loc.value.toLowerCase(), text=(q.value+' '+s2.value).trim().toLowerCase(); let n=0;
- rows.forEach(r=>{const rc=r.children[2].textContent.trim().toLowerCase(), rl=r.children[4].textContent.trim().toLowerCase(), rt=r.textContent.toLowerCase(); const show=(c==='all'||rc===c)&&(l==='all'||rl.includes(l))&&(!text||rt.includes(text)); r.style.display=show?'':'none'; if(show)n++;});
- document.getElementById('shown').textContent=n; document.getElementById('page').textContent=n?`Showing 1 to ${n} of ${n} records`:'No records'; document.getElementById('sub').textContent=n?`Showing ${n} matching present record${n===1?'':'s'}.`:'No matching present records.'; document.getElementById('empty').style.display=n?'none':'block';
-}
-[circle,loc].forEach(x=>x.addEventListener('change',apply)); [q,s2].forEach(x=>x.addEventListener('input',apply));
-document.getElementById('clear').onclick=()=>{circle.value='all';loc.value='all';q.value='';s2.value='';apply();};
-document.getElementById('print').onclick=()=>window.print();
-document.getElementById('csv').onclick=()=>{
- const data=rows.filter(r=>r.style.display!=='none').map(r=>[r.children[0].innerText.trim(),r.children[1].innerText.replace(/\s+/g,' ').trim(),r.children[2].innerText.trim(),r.children[3].innerText.trim(),r.children[4].innerText.trim(),r.children[5].innerText.trim()]);
- const csv=[['#','AEA Name','ADO Circle','Marked At','Location','Status'],...data].map(a=>a.map(v=>`"${v.replace(/"/g,'""')}"`).join(',')).join('\n');
- const blob=new Blob([csv],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='present-details-09-aug-2026.csv';a.click();URL.revokeObjectURL(url);
-};
-const modal=document.getElementById('modal');
-document.querySelectorAll('.view').forEach(b=>b.onclick=()=>{const r=b.closest('tr');document.getElementById('m1').textContent=r.children[1].querySelector('b').textContent;document.getElementById('m2').textContent=r.children[2].textContent;document.getElementById('m3').textContent=r.children[3].textContent;document.getElementById('m4').textContent=r.children[4].textContent;modal.style.display='flex';});
-document.getElementById('close').onclick=()=>modal.style.display='none'; modal.onclick=e=>{if(e.target===modal)modal.style.display='none'};
-document.querySelectorAll('.map').forEach(b=>b.onclick=()=>alert('Connect this action to the attendance GPS/map endpoint.'));
+document.addEventListener('DOMContentLoaded', function () {
+  const rows = Array.from(document.querySelectorAll('#presentTable tr'));
+  const circleFilter = document.getElementById('circleFilter');
+  const locationFilter = document.getElementById('locationFilter');
+  const searchInput = document.getElementById('searchInput');
+  const recordCount = document.getElementById('recordCount');
+  const tableInfo = document.getElementById('tableInfo');
+  const noResults = document.getElementById('noResults');
+
+  [...new Set(rows.map(row => row.children[2].textContent.trim()))]
+    .sort()
+    .forEach(circle => {
+      circleFilter.insertAdjacentHTML('beforeend',
+        `<option value="${circle.toLowerCase()}">${circle}</option>`);
+    });
+
+  function applyFilters() {
+    const circle = circleFilter.value.toLowerCase();
+    const location = locationFilter.value.toLowerCase();
+    const query = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+
+    rows.forEach(row => {
+      const rowCircle = row.children[2].textContent.trim().toLowerCase();
+      const rowLocation = row.children[4].textContent.trim().toLowerCase();
+      const rowText = row.textContent.toLowerCase();
+
+      const matchesCircle = circle === 'all' || rowCircle === circle;
+      const matchesLocation = location === 'all' || rowLocation.includes(location);
+      const matchesSearch = !query || rowText.includes(query);
+
+      const show = matchesCircle && matchesLocation && matchesSearch;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    recordCount.textContent = visible;
+    tableInfo.textContent = visible
+      ? `Showing 1 to ${visible} of ${visible} records`
+      : 'No records found';
+    noResults.classList.toggle('d-none', visible !== 0);
+  }
+
+  circleFilter.addEventListener('change', applyFilters);
+  locationFilter.addEventListener('change', applyFilters);
+  searchInput.addEventListener('input', applyFilters);
+
+  document.getElementById('clearBtn').addEventListener('click', function () {
+    circleFilter.value = 'all';
+    locationFilter.value = 'all';
+    searchInput.value = '';
+    applyFilters();
+  });
+
+  document.getElementById('printBtn').addEventListener('click', function () {
+    window.print();
+  });
+
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    const visibleRows = rows.filter(row => row.style.display !== 'none');
+    const csvRows = [['#','AEA Name','ADO Circle','Marked At','Location','Status']];
+
+    visibleRows.forEach(row => {
+      csvRows.push([
+        row.children[0].innerText.trim(),
+        row.children[1].innerText.replace(/\s+/g, ' ').trim(),
+        row.children[2].innerText.trim(),
+        row.children[3].innerText.trim(),
+        row.children[4].innerText.replace(/\s+/g, ' ').trim(),
+        row.children[5].innerText.trim()
+      ]);
+    });
+
+    const csv = csvRows.map(row =>
+      row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')
+    ).join('\n');
+
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'present-details-09-aug-2026.csv';
+    link.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.querySelectorAll('.view-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      alert(
+        `AEA: ${this.dataset.name}\n` +
+        `ADO Circle: ${this.dataset.circle}\n` +
+        `Marked At: ${this.dataset.time}\n` +
+        `Location: ${this.dataset.location}\n` +
+        `Status: Present`
+      );
+    });
+  });
+
+  applyFilters();
+});
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('layoutMenu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', function () {
+      menu.classList.toggle('open');
+    });
+  }
+});
+</script>
+
 </body>
 </html>
