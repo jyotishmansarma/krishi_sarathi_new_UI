@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>District-wise Circle AEA List | Krishi Sarathi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --green:#238b45;
+  --green-soft:#edf8f0;
+  --blue:#526ee8;
+  --blue-soft:#eef1ff;
+  --text:#27313d;
+  --muted:#718096;
+  --border:#e5e9ee;
+  --bg:#f6f8fa;
+  --white:#fff;
+  --danger:#c84d4d;
+  --warning:#a66a00;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Public Sans",Arial,sans-serif;
+  font-size:14px;
+}
+a{text-decoration:none;color:inherit}
+
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:238px;
+  background:#fff;
+  border-right:1px solid var(--border);
+  padding:20px 12px;
+  overflow:auto;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:4px 10px 24px;
+  font-size:18px;
+  font-weight:700;
+}
+.brand-icon{
+  width:35px;height:35px;
+  display:grid;place-items:center;
+  border-radius:9px;
+  background:var(--green-soft);
+}
+.nav-title{
+  margin:17px 11px 7px;
+  color:#9aa3ad;
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+.nav a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:10px 11px;
+  margin:2px 0;
+  border-radius:8px;
+  color:#606a76;
+  font-size:13px;
+}
+.nav a i{font-size:18px}
+.nav a:hover,.nav a.active{
+  background:var(--green-soft);
+  color:var(--green);
+  font-weight:600;
+}
+
+/* Main */
+.main{margin-left:238px;min-height:100vh}
+.topbar{
+  height:64px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.search{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#9aa2ad;
+}
+.search input{
+  border:0;
+  outline:0;
+  width:230px;
+  background:transparent;
+  font:inherit;
+}
+.avatar{
+  width:34px;height:34px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:#edf1ff;
+  color:#4f62aa;
+  font-size:12px;
+  font-weight:700;
+}
+
+.content{
+  max-width:1450px;
+  margin:auto;
+  padding:25px 30px 25px;
+}
+.breadcrumb{
+  color:#8c95a0;
+  font-size:12px;
+  margin-bottom:10px;
+}
+.breadcrumb a{color:var(--green)}
+.page-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:5px;
+}
+h1{
+  margin:0 0 5px;
+  font-size:24px;
+  letter-spacing:-.02em;
+}
+.subtitle{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+.back{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin:15px 0 18px;
+  color:var(--green);
+  font-size:12px;
+}
+
+/* Summary */
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+  margin-bottom:16px;
+}
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:10px;
+  box-shadow:0 1px 2px rgba(30,40,50,.025);
+}
+.summary-card{
+  padding:16px 18px;
+}
+.summary-label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  margin-bottom:7px;
+}
+.summary-value{
+  font-size:24px;
+  line-height:1.1;
+  font-weight:700;
+}
+.summary-note{
+  color:#9098a3;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* Filter */
+.filter-card{
+  padding:18px;
+  margin-bottom:16px;
+}
+.filter-title{
+  font-size:14px;
+  font-weight:600;
+  margin-bottom:14px;
+}
+.filter-grid{
+  display:grid;
+  grid-template-columns:1.2fr 1.2fr 1fr auto;
+  gap:14px;
+  align-items:end;
+}
+.field label{
+  display:block;
+  color:#66717e;
+  font-size:11px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+.select-wrap{position:relative}
+select,input{
+  width:100%;
+  height:42px;
+  border:1px solid #dce2e8;
+  border-radius:8px;
+  padding:0 12px;
+  outline:none;
+  background:#fff;
+  color:#596779;
+  font:inherit;
+  font-size:13px;
+}
+select:focus,input:focus{
+  border-color:#9fb0ef;
+  box-shadow:0 0 0 3px rgba(82,110,232,.08);
+}
+.btn{
+  height:42px;
+  border:0;
+  border-radius:8px;
+  padding:0 22px;
+  background:var(--blue);
+  color:#fff;
+  font:inherit;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+.btn:hover{filter:brightness(.97)}
+.btn-primary{background:#526ee8;color:#fff;border-color:#526ee8}
+
+/* Table */
+.table-card{overflow:hidden}
+.table-head{
+  padding:15px 18px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+.table-title{
+  font-size:14px;
+  font-weight:600;
+}
+.table-sub{
+  margin-top:3px;
+  color:#929aa5;
+  font-size:11px;
+}
+.table-search{
+  width:220px;
+  height:38px;
+}
+.table-wrap{overflow:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+th{
+  padding:11px 16px;
+  background:#fafbfc;
+  color:#77818d;
+  text-align:left;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-weight:600;
+}
+td{
+  padding:12px 16px;
+  border-top:1px solid #eef0f2;
+  font-size:12px;
+}
+.rank{color:#9aa3ad;width:50px}
+.district{font-weight:600;color:#303a46}
+.circle{font-weight:500;color:#526071}
+.count{
+  font-size:14px;
+  font-weight:700;
+}
+.status{
+  display:inline-flex;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:600;
+}
+.good{background:#eaf7ee;color:#218a45}
+.medium{background:#fff5df;color:#a76a00}
+.low{background:#fdecec;color:#c34a4a}
+.progress{
+  width:150px;
+  height:6px;
+  background:#edf0f2;
+  border-radius:20px;
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  background:var(--green);
+  border-radius:20px;
+}
+.action{
+  color:var(--green);
+  font-size:11px;
+  white-space:nowrap;
+}
+.action i{vertical-align:-2px}
+.empty{
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:#8a939e;
+}
+
+/* Footer */
+.footer{
+  padding:18px 0 4px;
+  text-align:center;
+  color:#9aa2ad;
+  font-size:10px;
+}
+
+/* Responsive */
+@media(max-width:1050px){
+  .sidebar{width:72px;padding:20px 8px}
+  .brand span,.nav a span,.nav-title{display:none}
+  .main{margin-left:72px}
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .filter-grid{grid-template-columns:1fr 1fr}
+  .filter-grid .btn{width:100%}
+}
+@media(max-width:650px){
+  .topbar{padding:0 15px}
+  .content{padding:20px 15px}
+  .summary{grid-template-columns:1fr 1fr;gap:9px}
+  .summary-card{padding:13px}
+  .summary-value{font-size:20px}
+  .filter-grid{grid-template-columns:1fr}
+  .table-head{align-items:flex-start;flex-direction:column}
+  .table-search{width:100%}
+  .search input{width:130px}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">🌱</div>
+    <span>Krishi Sarathi</span>
+  </div>
+
+  <nav class="nav">
+    <a href="dashboard.html"><i class="bx bx-home-circle"></i><span>Dashboard</span></a>
+    <a href="#"><i class="bx bx-group"></i><span>Users</span></a>
+    <a href="#"><i class="bx bx-collection"></i><span>Master</span></a>
+    <a href="#"><i class="bx bx-layer"></i><span>Application Master</span></a>
+    <a href="#"><i class="bx bx-key"></i><span>Role Permissions</span></a>
+    <a href="#"><i class="bx bx-id-card"></i><span>User Roles</span></a>
+    <a href="#"><i class="bx bx-news"></i><span>Agri News</span></a>
+    <a href="#"><i class="bx bx-task"></i><span>Activities</span></a>
+
+    <div class="nav-title">Reports</div>
+    <a href="attendance-report.html" class="active"><i class="bx bx-user-check"></i><span>Attendance</span></a>
+    <a href="task-monitoring.html"><i class="bx bx-bar-chart-alt-2"></i><span>Activity Overview</span></a>
+    <a href="#"><i class="bx bx-line-chart"></i><span>Activity Summary</span></a>
+    <a href="recent-submissions.html"><i class="bx bx-check-double"></i><span>Completed Activity</span></a>
+    <a href="disease-surveillance.html"><i class="bx bx-bug"></i><span>Pest / Diseases</span></a>
+    <a href="#"><i class="bx bx-help-circle"></i><span>Query Summary</span></a>
+  </nav>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="search">
+    <i class="bx bx-search"></i>
+    <input placeholder="Search...">
+  </div>
+  <div class="avatar">JS</div>
+</header>
+
+<section class="content">
+
+  <div class="breadcrumb">
+    <a href="dashboard.html">Dashboard</a> /
+    <a href="attendance-report.html">Attendance</a> /
+    Circle-wise AEA
+  </div>
+
+  <div class="page-head">
+    <div>
+      <h1 id="pageTitle">District-wise Circle & AEA</h1>
+      <p class="subtitle" id="pageSubtitle">Select a circle to view its AEA-wise attendance report.</p>
+    </div>
+  </div>
+
+  <a href="total_aea_dashboard_css_fixed.html" class="back">
+    <i class="bx bx-arrow-back"></i> Back to Attendance
+  </a>
+
+  <!-- Summary -->
+  <div class="summary">
+    <div class="card summary-card">
+      <div class="summary-label">Selected District</div>
+      <div class="summary-value" id="districtName">Chirang</div>
+      <div class="summary-note">District-wise view</div>
+    </div>
+
+    <div class="card summary-card">
+      <div class="summary-label">Total Circles</div>
+      <div class="summary-value" id="circleCount">5</div>
+      <div class="summary-note">Agricultural circles</div>
+    </div>
+
+    <div class="card summary-card">
+      <div class="summary-label">Total AEA</div>
+      <div class="summary-value" id="aeaCount">60</div>
+      <div class="summary-note">Across selected district</div>
+    </div>
+
+    <div class="card summary-card">
+      <div class="summary-label">Active Today</div>
+      <div class="summary-value" id="activeRate">82%</div>
+      <div class="summary-note">Latest attendance status</div>
+    </div>
+  </div>
+
+  <!-- District / Circle selection -->
+  <div class="card filter-card">
+    <div class="filter-title">District & Circle Selection</div>
+
+    <div class="filter-grid">
+      <div class="field">
+        <label>District</label>
+        <select id="districtSelect">
+          <option value="Chirang">Chirang</option>
+          <option value="Kamrup (Metro)">Kamrup (Metro)</option>
+          <option value="Nagaon">Nagaon</option>
+          <option value="Dibrugarh">Dibrugarh</option>
+          <option value="Nalbari">Nalbari</option>
+          <option value="Jorhat">Jorhat</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Circle</label>
+        <select id="circleSelect">
+          <option value="all">All Circles</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Search</label>
+        <input id="searchInput" placeholder="Search circle / AEA name...">
+      </div>
+
+      <button class="btn" id="showBtn">
+        <i class="bx bx-search"></i> Show Report
+      </button>
+    </div>
+  </div>
+
+  <!-- Circle report -->
+  <div class="card table-card">
+
+    <div class="table-head">
+      <div>
+        <div class="table-title" id="reportTitle">Circle-wise AEA List</div>
+        <div class="table-sub" id="reportSubtitle">
+          Select a circle to see AEA-wise details.
+        </div>
+      </div>
+
+      <input class="table-search" id="tableSearch" placeholder="Search circle...">
+    </div>
+
+    <div class="table-wrap">
+      <table id="circleTableWrapper">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Circle</th>
+            <th>Total AEA</th>
+            <th>Present</th>
+            <th>Absent</th>
+            <th>Active Rate</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="circleTable"></tbody>
+      </table>
+    </div>
+
+    <div id="circleEmpty" class="empty">
+      No circle found.
+    </div>
+  </div>
+
+  <!-- AEA-wise report -->
+  <div class="card table-card" id="aeaReportCard" style="display:none;margin-top:16px;">
+
+    <div class="table-head">
+      <div>
+        <div class="table-title" id="aeaTitle">AEA-wise Attendance</div>
+        <div class="table-sub" id="aeaSubtitle"></div>
+      </div>
+
+      <button class="btn" id="backToCircles">
+        <i class="bx bx-arrow-back"></i> Back to Circles
+      </button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>AEA Name</th>
+            <th>Days Present</th>
+            <th>Attendance</th>
+            <th>Last Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="aeaTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    Krishi Sarathi © 2026 — Directorate of Agriculture, Government of Assam
+  </div>
+
+</section>
+</main>
+
+<script>
+/*
+  UI DATA STRUCTURE:
+  District -> Circle -> AEA
+  Replace this sample array with your API response.
+*/
+const reportData = {
+  "Chirang": {
+    "Bengtol": [
+      {name:"AEA-SUBAJHAR", days:1, status:"Present"},
+      {name:"AEA-BENGTOL-01", days:1, status:"Present"},
+      {name:"AEA-BENGTOL-02", days:0, status:"Absent"}
+    ],
+    "Bijni": [
+      {name:"AEA-BIJNI-01", days:1, status:"Present"},
+      {name:"AEA-BIJNI-02", days:1, status:"Present"},
+      {name:"AEA-BIJNI-03", days:0, status:"Absent"}
+    ],
+    "Sidli": [
+      {name:"AEA-SIDLI-01", days:1, status:"Present"},
+      {name:"AEA-SIDLI-02", days:1, status:"Present"}
+    ],
+    "Amteka": [
+      {name:"AEA-AMTEKA-01", days:1, status:"Present"},
+      {name:"AEA-AMTEKA-02", days:0, status:"Absent"}
+    ],
+    "Runikhata": [
+      {name:"AEA-RUNIKHATA-01", days:1, status:"Present"},
+      {name:"AEA-RUNIKHATA-02", days:1, status:"Present"}
+    ]
+  },
+
+  "Kamrup (Metro)": {
+    "Dispur": [
+      {name:"AEA-DISPUR-01", days:1, status:"Present"},
+      {name:"AEA-DISPUR-02", days:1, status:"Present"}
+    ],
+    "Chandrapur": [
+      {name:"AEA-CHANDRAPUR-01", days:1, status:"Present"},
+      {name:"AEA-CHANDRAPUR-02", days:0, status:"Absent"}
+    ],
+    "Sonapur": [
+      {name:"AEA-SONAPUR-01", days:1, status:"Present"},
+      {name:"AEA-SONAPUR-02", days:1, status:"Present"}
+    ]
+  },
+
+  "Nagaon": {
+    "Nagaon": [
+      {name:"AEA-NAGAON-01", days:1, status:"Present"},
+      {name:"AEA-NAGAON-02", days:0, status:"Absent"}
+    ],
+    "Raha": [
+      {name:"AEA-RAHA-01", days:1, status:"Present"},
+      {name:"AEA-RAHA-02", days:1, status:"Present"}
+    ],
+    "Kaliabor": [
+      {name:"AEA-KALIABOR-01", days:0, status:"Absent"},
+      {name:"AEA-KALIABOR-02", days:1, status:"Present"}
+    ]
+  },
+
+  "Dibrugarh": {
+    "Dibrugarh East": [
+      {name:"AEA-DIBRUGARH-E-01", days:1, status:"Present"},
+      {name:"AEA-DIBRUGARH-E-02", days:1, status:"Present"}
+    ],
+    "Dibrugarh West": [
+      {name:"AEA-DIBRUGARH-W-01", days:1, status:"Present"},
+      {name:"AEA-DIBRUGARH-W-02", days:0, status:"Absent"}
+    ],
+    "Naharkatia": [
+      {name:"AEA-NAHARKATIA-01", days:1, status:"Present"},
+      {name:"AEA-NAHARKATIA-02", days:1, status:"Present"}
+    ]
+  },
+
+  "Nalbari": {
+    "Nalbari": [
+      {name:"AEA-NALBARI-01", days:1, status:"Present"},
+      {name:"AEA-NALBARI-02", days:0, status:"Absent"}
+    ],
+    "Tihu": [
+      {name:"AEA-TIHU-01", days:1, status:"Present"},
+      {name:"AEA-TIHU-02", days:1, status:"Present"}
+    ]
+  },
+
+  "Jorhat": {
+    "Jorhat East": [
+      {name:"AEA-JORHAT-E-01", days:1, status:"Present"},
+      {name:"AEA-JORHAT-E-02", days:1, status:"Present"}
+    ],
+    "Jorhat West": [
+      {name:"AEA-JORHAT-W-01", days:1, status:"Present"},
+      {name:"AEA-JORHAT-W-02", days:0, status:"Absent"}
+    ]
+  }
+};
+
+const districtSelect = document.getElementById("districtSelect");
+const circleSelect = document.getElementById("circleSelect");
+const searchInput = document.getElementById("searchInput");
+const tableSearch = document.getElementById("tableSearch");
+const circleTable = document.getElementById("circleTable");
+const aeaReportCard = document.getElementById("aeaReportCard");
+
+function getDistrictData(){
+  return reportData[districtSelect.value] || {};
+}
+
+function getCircleRows(){
+  const districtData = getDistrictData();
+
+  return Object.keys(districtData).map(circle => {
+    const aea = districtData[circle];
+    const present = aea.filter(x => x.status === "Present").length;
+    const total = aea.length;
+    const active = total ? Math.round((present / total) * 100) : 0;
+
+    return {
+      circle,
+      total,
+      present,
+      absent: total - present,
+      active,
+      aea
+    };
+  });
+}
+
+function updateCircleOptions(){
+  const circles = Object.keys(getDistrictData());
+
+  circleSelect.innerHTML =
+    '<option value="all">All Circles</option>' +
+    circles.map(c => `<option value="${c}">${c}</option>`).join("");
+}
+
+function updateSummary(rows){
+  const totalAEA = rows.reduce((s,x) => s + x.total, 0);
+  const present = rows.reduce((s,x) => s + x.present, 0);
+  const rate = totalAEA ? Math.round((present / totalAEA) * 100) : 0;
+
+  document.getElementById("districtName").textContent = districtSelect.value;
+  document.getElementById("circleCount").textContent = rows.length;
+  document.getElementById("aeaCount").textContent = totalAEA;
+  document.getElementById("activeRate").textContent = rate + "%";
+}
+
+function renderCircles(){
+  const district = districtSelect.value;
+  const selectedCircle = circleSelect.value;
+  const query = (searchInput.value + " " + tableSearch.value).toLowerCase().trim();
+
+  let rows = getCircleRows();
+
+  if(selectedCircle !== "all"){
+    rows = rows.filter(x => x.circle === selectedCircle);
+  }
+
+  if(query){
+    rows = rows.filter(x => x.circle.toLowerCase().includes(query));
+  }
+
+  updateSummary(rows);
+
+  document.getElementById("pageTitle").textContent =
+    district + " — Circle-wise AEA";
+
+  document.getElementById("pageSubtitle").textContent =
+    "Select a circle below to view the AEA-wise attendance report.";
+
+  document.getElementById("reportTitle").textContent =
+    district + " — Circle-wise AEA";
+
+  document.getElementById("reportSubtitle").textContent =
+    rows.length + " circle(s) available";
+
+  circleTable.innerHTML = "";
+
+  rows.forEach((x,index) => {
+    const tr = document.createElement("tr");
+
+    const statusClass =
+      x.active >= 90 ? "good" :
+      x.active >= 75 ? "medium" : "low";
+
+    tr.innerHTML = `
+      <td class="rank">${index + 1}</td>
+      <td class="circle">${x.circle}</td>
+      <td class="count">${x.total}</td>
+      <td>${x.present}</td>
+      <td>${x.absent}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:9px;">
+          <span class="status ${statusClass}">${x.active}%</span>
+          <div class="progress" style="width:110px;">
+            <span style="width:${x.active}%"></span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <button class="btn" style="height:34px;background:#526ee8;color:white;"
+          onclick="showAEAReport('${x.circle.replace(/'/g,"\\'")}')">
+          <i class="bx bx-group"></i> View AEA
+        </button>
+      </td>
+    `;
+
+    circleTable.appendChild(tr);
+  });
+
+  document.getElementById("circleEmpty").style.display =
+    rows.length ? "none" : "block";
+
+  aeaReportCard.style.display = "none";
+}
+
+function showAEAReport(circle){
+  const district = districtSelect.value;
+  const aeaRows = getDistrictData()[circle] || [];
+
+  document.getElementById("aeaTitle").textContent =
+    `${district} — ${circle} — AEA-wise Attendance`;
+
+  document.getElementById("aeaSubtitle").textContent =
+    `${aeaRows.length} AEA(s) under this circle`;
+
+  const aeaTable = document.getElementById("aeaTable");
+  aeaTable.innerHTML = "";
+
+  aeaRows.forEach((x,index) => {
+    const tr = document.createElement("tr");
+    const statusClass = x.status === "Present" ? "good" : "low";
+
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td class="district">${x.name}</td>
+      <td>${x.days} day${x.days === 1 ? "" : "s"}</td>
+      <td>
+        <span class="status ${statusClass}">
+          ${x.days > 0 ? "Present" : "Absent"}
+        </span>
+      </td>
+      <td>${x.status}</td>
+      <td>
+        <a class="action"
+          href="attendance-report.html?district=${encodeURIComponent(district)}&circle=${encodeURIComponent(circle)}&aea=${encodeURIComponent(x.name)}">
+          View Report <i class="bx bx-right-arrow-alt"></i>
+        </a>
+      </td>
+    `;
+
+    aeaTable.appendChild(tr);
+  });
+
+  aeaReportCard.style.display = "block";
+  aeaReportCard.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+document.getElementById("backToCircles").addEventListener("click", function(){
+  aeaReportCard.style.display = "none";
+  window.scrollTo({top:0, behavior:"smooth"});
+});
+
+districtSelect.addEventListener("change", function(){
+  updateCircleOptions();
+  renderCircles();
+});
+
+circleSelect.addEventListener("change", renderCircles);
+searchInput.addEventListener("input", renderCircles);
+tableSearch.addEventListener("input", renderCircles);
+document.getElementById("showBtn").addEventListener("click", renderCircles);
+
+/* Read the district passed from Total AEA page. */
+const params = new URLSearchParams(window.location.search);
+const requestedDistrict = params.get("district");
+
+if(requestedDistrict){
+  const decoded = decodeURIComponent(requestedDistrict);
+  const option = [...districtSelect.options].find(
+    o => o.value.toLowerCase() === decoded.toLowerCase()
+  );
+  if(option){
+    districtSelect.value = option.value;
+  }
+}
+
+updateCircleOptions();
+renderCircles();
+</script>
+
+</body>
+</html>

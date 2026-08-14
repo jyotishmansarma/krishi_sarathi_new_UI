@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Task Monitoring — Krishi Sarathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
+<link href="common.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<aside class="menu" id="layoutMenu">
+  <a href="dashboard.html" class="app-brand">
+    <div class="app-brand-logo">🌱</div>
+    <span class="app-brand-text">krishi sarathi</span>
+  </a>
+  <ul class="menu-inner">
+    <li class="menu-item"><a href="dashboard.html" class="menu-link"><i class="menu-icon bx bx-home-circle"></i><div>Dashboard</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-group"></i><div>Users</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-collection"></i><div>Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-layer"></i><div>Application Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-key"></i><div>Role Permissions Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-id-card"></i><div>User Role Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-news"></i><div>Agri News Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-task"></i><div>Activities</div></a></li>
+    <li class="menu-header">Report</li>
+    <li class="menu-item"><a href="attendance-report.html" class="menu-link"><i class="menu-icon bx bx-user-check"></i><div>Attendance</div></a></li><li class="menu-item active"><a href="task-monitoring.html" class="menu-link"><i class="menu-icon bx bx-bar-chart-alt-2"></i><div>Activity Overview</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-line-chart"></i><div>Activity Summary</div></a></li><li class="menu-item"><a href="recent-submissions.html" class="menu-link"><i class="menu-icon bx bx-check-double"></i><div>Completed Activity</div></a></li><li class="menu-item"><a href="disease-surveillance.html" class="menu-link"><i class="menu-icon bx bx-bug"></i><div>Pest / Diseases</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-help-circle"></i><div>Query Summary</div></a></li>
+  </ul>
+</aside>
+
+<div class="layout-page">
+  
+<nav class="navbar">
+  <button class="menu-toggle" id="menuToggle"><i class="bx bx-menu"></i></button>
+  <div class="navbar-search">
+    <i class="bx bx-search"></i>
+    <input type="text" placeholder="Search..." />
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <i class="bx bx-bell fs-5 text-secondary"></i>
+    <div class="avatar-initial">JS</div>
+  </div>
+</nav>
+
+  <div class="content-wrapper">
+    <div class="breadcrumb-style1 text-muted"><a href="dashboard.html">Dashboard</a><span class="sep">/</span>Task Monitoring</div>
+    
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+      <div>
+        <h4 class="page-title">Task Monitoring</h4>
+        <p class="page-sub">Submission and completion pipeline · Sat, 09 Aug 2026</p>
+      </div>
+    </div>
+
+    
+    <a href="dashboard.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to dashboard</a>
+
+    <div class="row g-3">
+      <div class="col-lg-5">
+        <div class="card mb-3">
+          <div class="card-header">Pipeline Status</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small mb-1"><span>Submitted</span><span>3562</span></div>
+              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:100%;background:#696cff;"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small mb-1"><span>Under Review</span><span>428</span></div>
+              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:12%;background:#00bad1;"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small mb-1"><span>Completed</span><span>2867</span></div>
+              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:80%;background:#28c76f;"></div></div>
+            </div>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small mb-1"><span>Rejected / Rework</span><span>267</span></div>
+              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:7%;background:#ff424f;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card mb-3">
+          <div class="card-header">Completion Share</div>
+          <div class="card-body"><div id="taskDonut2"></div></div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="card mb-3">
+          <div class="card-header">SLA</div>
+          <div class="card-body">
+            <div class="mini-stat mb-2"><div class="v">2.4 days</div><div class="l">Avg. time to complete</div></div>
+            <div class="mini-stat"><div class="v">94</div><div class="l">Tasks overdue &gt; 5 days</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-1 mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Top ADO Circles by Submissions</span>
+        <a href="tasks-completed.html" class="btn btn-sm btn-outline-primary">Completion Breakdown</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead><tr><th>ADO Circle</th><th>Submitted</th><th>Completed</th><th>%</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="fw-semibold">Guwahati ADO Circle</td>
+              <td>214</td>
+              <td>189</td>
+              <td><span class="badge-pill bg-label-warning">88%</span></td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Dibrugarh Sadar ADO Circle</td>
+              <td>198</td>
+              <td>175</td>
+              <td><span class="badge-pill bg-label-warning">88%</span></td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Nagaon Sadar ADO Circle</td>
+              <td>176</td>
+              <td>121</td>
+              <td><span class="badge-pill bg-label-danger">69%</span></td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Dhemaji ADO Circle</td>
+              <td>142</td>
+              <td>89</td>
+              <td><span class="badge-pill bg-label-danger">63%</span></td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Rani ADO Circle</td>
+              <td>133</td>
+              <td>108</td>
+              <td><span class="badge-pill bg-label-warning">81%</span></td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Jorhat East ADO Circle</td>
+              <td>120</td>
+              <td>101</td>
+              <td><span class="badge-pill bg-label-warning">84%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer-note">Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="common.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  new ApexCharts(document.querySelector('#taskDonut2'), {
+    series: [80, 12, 8],
+    chart: { type: 'donut', height: 230 },
+    labels: ['Completed', 'Under review', 'Rejected / rework'],
+    colors: ['#28c76f', '#00bad1', '#ff424f'],
+    legend: { position: 'bottom', fontSize: '12px' },
+    dataLabels: { enabled: true, style: { fontSize:'11px' } }
+  }).render();
+});
+</script>
+
+</body>
+</html>

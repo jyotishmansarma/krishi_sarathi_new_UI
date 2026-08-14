@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Disease Surveillance — Krishi Sarathi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
+<link href="common.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<aside class="menu" id="layoutMenu">
+  <a href="dashboard.html" class="app-brand">
+    <div class="app-brand-logo">🌱</div>
+    <span class="app-brand-text">krishi sarathi</span>
+  </a>
+  <ul class="menu-inner">
+    <li class="menu-item"><a href="dashboard.html" class="menu-link"><i class="menu-icon bx bx-home-circle"></i><div>Dashboard</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-group"></i><div>Users</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-collection"></i><div>Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-layer"></i><div>Application Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-key"></i><div>Role Permissions Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-id-card"></i><div>User Role Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-news"></i><div>Agri News Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-task"></i><div>Activities</div></a></li>
+    <li class="menu-header">Report</li>
+    <li class="menu-item"><a href="attendance-report.html" class="menu-link"><i class="menu-icon bx bx-user-check"></i><div>Attendance</div></a></li><li class="menu-item"><a href="task-monitoring.html" class="menu-link"><i class="menu-icon bx bx-bar-chart-alt-2"></i><div>Activity Overview</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-line-chart"></i><div>Activity Summary</div></a></li><li class="menu-item"><a href="recent-submissions.html" class="menu-link"><i class="menu-icon bx bx-check-double"></i><div>Completed Activity</div></a></li><li class="menu-item active"><a href="disease-surveillance.html" class="menu-link"><i class="menu-icon bx bx-bug"></i><div>Pest / Diseases</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-help-circle"></i><div>Query Summary</div></a></li>
+  </ul>
+</aside>
+
+<div class="layout-page">
+  
+<nav class="navbar">
+  <button class="menu-toggle" id="menuToggle"><i class="bx bx-menu"></i></button>
+  <div class="navbar-search">
+    <i class="bx bx-search"></i>
+    <input type="text" placeholder="Search..." />
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <i class="bx bx-bell fs-5 text-secondary"></i>
+    <div class="avatar-initial">JS</div>
+  </div>
+</nav>
+
+  <div class="content-wrapper">
+    <div class="breadcrumb-style1 text-muted"><a href="dashboard.html">Dashboard</a><span class="sep">/</span>Disease / Pest Surveillance</div>
+    
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+      <div>
+        <h4 class="page-title">Disease / Pest Surveillance</h4>
+        <p class="page-sub">Field-reported outbreaks · last 7 days</p>
+      </div>
+    </div>
+
+    
+    <a href="dashboard.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to dashboard</a>
+
+    <div class="alert alert-danger py-2 mb-3" style="font-size:12.5px;">
+      Last Issue Diagnosed: Paddy Blast, at Sissiborgaon, Dhemaji on 08-08-2026, 05:31 PM
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-md-3 col-6"><div class="mini-stat"><div class="v">48</div><div class="l">Total cases (7 days)</div></div></div>
+      <div class="col-md-3 col-6"><div class="mini-stat"><div class="v">6</div><div class="l">Districts affected</div></div></div>
+      <div class="col-md-3 col-6"><div class="mini-stat"><div class="v">Paddy Blast</div><div class="l">Most reported disease</div></div></div>
+      <div class="col-md-3 col-6"><div class="mini-stat"><div class="v">Dhemaji</div><div class="l">Highest case district (14)</div></div></div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-5">
+        <div class="card h-100">
+          <div class="card-header">Cases by Disease Type</div>
+          <div class="card-body"><div id="diseaseBar"></div></div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="card h-100">
+          <div class="card-header">Assam — Outbreak Map</div>
+          <div class="card-body p-0">
+            <div style="position:relative;height:340px;overflow:hidden;background:linear-gradient(135deg,#e9eee1 0%,#dde7d2 45%,#cfe0de 100%);">
+              <span style="position:absolute;top:38%;left:22%;width:14px;height:14px;border-radius:50%;background:#ff424f;border:2px solid #fff;" title="Dhemaji"></span>
+              <span style="position:absolute;top:52%;left:47%;width:14px;height:14px;border-radius:50%;background:#ff9f43;border:2px solid #fff;" title="Nagaon"></span>
+              <span style="position:absolute;top:30%;left:60%;width:14px;height:14px;border-radius:50%;background:#ff424f;border:2px solid #fff;" title="Dibrugarh"></span>
+              <span style="position:absolute;top:66%;left:34%;width:14px;height:14px;border-radius:50%;background:#ff9f43;border:2px solid #fff;" title="Kamrup (Metro)"></span>
+              <span style="position:absolute;top:24%;left:70%;width:10px;height:10px;border-radius:50%;background:#00bad1;border:2px solid #fff;" title="Sivasagar"></span>
+              <span style="position:absolute;top:58%;left:20%;width:10px;height:10px;border-radius:50%;background:#00bad1;border:2px solid #fff;" title="Barpeta"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3 mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>All Reported Cases</span>
+        <div class="filter-bar"><input type="text" placeholder="Search district or disease..." style="min-width:200px;" /></div>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead><tr><th>District</th><th>Block</th><th>Disease / Pest</th><th>Severity</th><th>Reported On</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="fw-semibold">Dhemaji</td>
+              <td>Sissiborgaon</td>
+              <td>Paddy Blast</td>
+              <td><span class="badge-pill bg-label-danger">9 cases</span></td>
+              <td>08-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Dhemaji</td>
+              <td>Machkhowa</td>
+              <td>Brown Plant Hopper</td>
+              <td><span class="badge-pill bg-label-warning">5 cases</span></td>
+              <td>07-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Nagaon</td>
+              <td>Raha</td>
+              <td>Bacterial Leaf Blight</td>
+              <td><span class="badge-pill bg-label-danger">7 cases</span></td>
+              <td>07-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Nagaon</td>
+              <td>Kaliabor</td>
+              <td>Stem Borer</td>
+              <td><span class="badge-pill bg-label-warning">4 cases</span></td>
+              <td>06-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Kamrup (Metro)</td>
+              <td>Chandrapur</td>
+              <td>Sheath Blight</td>
+              <td><span class="badge-pill bg-label-info">3 cases</span></td>
+              <td>06-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Dibrugarh</td>
+              <td>Chabua</td>
+              <td>Paddy Blast</td>
+              <td><span class="badge-pill bg-label-warning">4 cases</span></td>
+              <td>05-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Dibrugarh</td>
+              <td>Tengakhat</td>
+              <td>Leaf Folder</td>
+              <td><span class="badge-pill bg-label-info">2 cases</span></td>
+              <td>05-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Sivasagar</td>
+              <td>Nazira</td>
+              <td>Brown Plant Hopper</td>
+              <td><span class="badge-pill bg-label-danger">6 cases</span></td>
+              <td>04-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Golaghat</td>
+              <td>Bokakhat</td>
+              <td>Stem Borer</td>
+              <td><span class="badge-pill bg-label-info">3 cases</span></td>
+              <td>04-08-2026</td>
+            </tr>
+            <tr>
+              <td class="fw-semibold">Barpeta</td>
+              <td>Sarthebari</td>
+              <td>Bacterial Leaf Blight</td>
+              <td><span class="badge-pill bg-label-warning">5 cases</span></td>
+              <td>03-08-2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer-note">Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="common.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  new ApexCharts(document.querySelector('#diseaseBar'), {
+    series: [{ name: 'Cases', data: [13, 12, 8, 6, 5, 4] }],
+    chart: { type: 'bar', height: 300, toolbar:{show:false} },
+    plotOptions: { bar: { horizontal: true, borderRadius: 3, barHeight:'50%' } },
+    colors: ['#ff424f'],
+    dataLabels: { enabled: true, style:{fontSize:'10px'} },
+    xaxis: { categories: ['Paddy Blast','Bacterial Leaf Blight','Brown Plant Hopper','Stem Borer','Sheath Blight','Leaf Folder'], labels:{style:{fontSize:'10px'}} },
+    grid: { borderColor: '#eceef1' }
+  }).render();
+});
+</script>
+
+</body>
+</html>
