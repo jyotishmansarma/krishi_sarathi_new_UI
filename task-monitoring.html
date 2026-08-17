@@ -1,39 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Task Monitoring — Krishi Sarathi</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Overview — Krishi Sarathi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.0/dist/apexcharts.min.js"></script>
-<link href="common.css" rel="stylesheet" />
+
+<style>
+/* Page-specific CSS only. The common visual system comes from common.css,
+   exactly like the uploaded dashboard. */
+.chart-height { min-height:560px; }
+.table-progress { min-width:130px; height:7px; }
+.stat-card { cursor:default; }
+@media(max-width:767px) {
+  .chart-height { min-height:430px; }
+}
+</style>
+
+<style>
+:root{
+  --primary:#696cff;
+  --success:#28c76f;
+  --danger:#ff424f;
+  --warning:#ff9f43;
+  --info:#00bad1;
+  --body:#f5f5f9;
+  --card:#fff;
+  --text:#566a7f;
+  --muted:#697a8d;
+  --border:#d9dee3;
+  --sidebar:#fff;
+  --sidebar-width:260px;
+  --navbar-height:62px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;font-family:"Public Sans",Arial,sans-serif}
+body{background:var(--body);color:var(--text);font-size:14px}
+a{text-decoration:none}
+button,input{font-family:inherit}
+
+/* Layout */
+.menu{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar-width);
+  background:var(--sidebar);border-right:1px solid #e7e7e8;
+  z-index:1030;overflow-y:auto;padding:14px 12px;
+}
+.layout-page{margin-left:var(--sidebar-width);min-height:100vh}
+.navbar{
+  height:var(--navbar-height);background:#fff;border-bottom:1px solid #e7e7e8;
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px;
+  position:sticky;top:0;z-index:1000;
+}
+.content-wrapper{padding:22px 24px;max-width:1600px;margin:auto}
+.menu-toggle{
+  border:0;background:transparent;color:#697a8d;font-size:24px;
+  display:none;cursor:pointer;
+}
+.app-brand{
+  height:52px;display:flex;align-items:center;gap:10px;
+  padding:0 12px;color:#566a7f;
+}
+.app-brand-logo{
+  width:34px;height:34px;border-radius:8px;background:#e9e9ff;
+  display:grid;place-items:center;font-size:18px;
+}
+.app-brand-text{font-size:18px;font-weight:700;text-transform:capitalize}
+.menu-inner{list-style:none;margin:0;padding:0}
+.menu-item{list-style:none;margin:2px 0}
+.menu-link{
+  min-height:42px;padding:9px 13px;border-radius:7px;
+  display:flex;align-items:center;gap:12px;color:#697a8d;
+  font-size:13px;transition:.15s ease;
+}
+.menu-link:hover,.menu-item.active .menu-link{
+  background:#f0f0ff;color:var(--primary);
+}
+.menu-item.active .menu-link{font-weight:600}
+.menu-icon{font-size:19px}
+.menu-header{
+  padding:18px 13px 7px;color:#a1acb8;font-size:11px;
+  font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+}
+
+/* Navbar */
+.navbar-search{
+  width:280px;display:flex;align-items:center;gap:8px;color:#a1acb8;
+}
+.navbar-search input{
+  width:100%;border:0;outline:0;background:transparent;color:#566a7f;
+}
+.avatar-initial{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:#e9e9ff;color:#5b5fca;font-size:12px;font-weight:700;
+}
+.bx-bell{cursor:pointer}
+
+/* Bootstrap-like helpers */
+.d-flex{display:flex!important}
+.align-items-center{align-items:center!important}
+.align-items-start{align-items:flex-start!important}
+.justify-content-between{justify-content:space-between!important}
+.flex-wrap{flex-wrap:wrap!important}
+.gap-2{gap:.5rem!important}
+.gap-3{gap:1rem!important}
+.mb-0{margin-bottom:0!important}
+.mb-3{margin-bottom:1rem!important}
+.mt-1{margin-top:.25rem!important}
+.mt-3{margin-top:1rem!important}
+.ms-1{margin-left:.25rem!important}
+.text-muted{color:#8592a3!important}
+.text-primary{color:var(--primary)!important}
+.text-secondary{color:#8592a3!important}
+.text-center{text-align:center!important}
+.small{font-size:12px!important}
+.fw-semibold{font-weight:600!important}
+.fs-5{font-size:1.25rem!important}
+
+/* Grid */
+.row{display:flex;flex-wrap:wrap;margin-left:-7px;margin-right:-7px}
+.row>*{padding-left:7px;padding-right:7px}
+.g-3{row-gap:14px}
+.col-12{width:100%}
+.col-6{width:50%}
+.col-md-5,.col-md-7{width:100%}
+.col-xl-3{width:100%}
+@media(min-width:768px){
+  .col-md-5{width:41.666667%}
+  .col-md-7{width:58.333333%}
+}
+@media(min-width:576px){
+  .col-sm-6{width:50%}
+}
+@media(min-width:1200px){
+  .col-xl-3{width:25%}
+}
+
+/* Typography */
+.breadcrumb-style1{font-size:12px;margin-bottom:8px}
+.breadcrumb-style1 a{color:var(--primary)}
+.sep{padding:0 7px;color:#b5bdc8}
+.page-title{font-size:24px;color:#566a7f;font-weight:600;margin:0 0 4px}
+.page-sub{font-size:13px;color:#8592a3;margin:0}
+.back-link{
+  display:inline-flex;align-items:center;gap:5px;
+  color:var(--primary);font-size:12px;margin:8px 0 18px;
+}
+
+/* Cards */
+.card{
+  background:var(--card);border:1px solid #e7e7e8;
+  border-radius:8px;box-shadow:0 .125rem .25rem rgba(161,172,184,.08);
+}
+.card-header{
+  padding:14px 18px;background:#fff;border-bottom:1px solid #eceef1;
+  color:#566a7f;font-size:14px;font-weight:600;
+}
+.card-body{padding:18px}
+.h-100{height:100%!important}
+
+/* KPI cards */
+.stat-card .card-body{
+  min-height:126px;display:flex;justify-content:space-between;align-items:flex-start;
+}
+.stat-label{
+  color:#8592a3;font-size:12px;text-transform:uppercase;
+  letter-spacing:.03em;margin-bottom:6px;
+}
+.stat-value{
+  color:#566a7f;font-size:26px;line-height:1.15;font-weight:600;
+}
+.stat-sub{font-size:12px;margin-top:5px}
+.stat-link{
+  color:var(--primary);font-size:11px;margin-top:10px;font-weight:500;
+}
+.avatar-stat{
+  width:42px;height:42px;border-radius:8px;display:grid;place-items:center;
+  font-size:21px;flex:0 0 auto;
+}
+.bg-label-primary{background:#e9e9ff!important;color:var(--primary)!important}
+.bg-label-success{background:#e8f8ee!important;color:var(--success)!important}
+.bg-label-danger{background:#ffe8ea!important;color:var(--danger)!important}
+.bg-label-warning{background:#fff0df!important;color:#ff9f43!important}
+.bg-label-info{background:#e2f8fb!important;color:var(--info)!important}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  border:1px solid transparent;border-radius:5px;padding:6px 12px;
+  font-size:12px;line-height:1.5;cursor:pointer;background:#fff;
+}
+.btn-sm{padding:5px 9px;font-size:11px}
+.btn-outline-secondary{border-color:#d9dee3;color:#697a8d}
+.btn-outline-secondary:hover{background:#f5f5f9}
+.badge{
+  display:inline-block;padding:.25em .55em;border-radius:4px;
+  font-size:10px;font-weight:600;
+}
+.bg-danger{background:var(--danger)!important;color:#fff!important}
+
+/* Tables */
+.table-responsive{overflow-x:auto}
+.table{
+  width:100%;border-collapse:collapse;color:#566a7f;
+}
+.table th{
+  background:#fafafa;color:#566a7f;font-size:11px;
+  text-transform:uppercase;letter-spacing:.04em;font-weight:600;
+  padding:11px 16px;border-bottom:1px solid #e7e7e8;text-align:left;
+}
+.table td{
+  padding:12px 16px;border-bottom:1px solid #eceef1;
+  font-size:12px;vertical-align:middle;
+}
+.table tbody tr:hover{background:#fafbff}
+.table .text-primary{color:var(--primary)!important}
+.filter-bar input{
+  height:36px;border:1px solid #d9dee3;border-radius:5px;
+  padding:6px 10px;outline:none;font-size:12px;color:#566a7f;
+}
+.filter-bar input:focus{border-color:#696cff;box-shadow:0 0 0 .15rem rgba(105,108,255,.12)}
+.badge-pill{
+  display:inline-block;padding:4px 8px;border-radius:20px;
+  font-size:10px;font-weight:600;white-space:nowrap;
+}
+.progress{
+  width:100%;background:#e9ecef;border-radius:10px;overflow:hidden;
+}
+.progress-bar{height:100%;border-radius:10px}
+.progress-bar.bg-success{background:var(--success)!important}
+.progress-bar.bg-warning{background:var(--warning)!important}
+.progress-bar.bg-danger{background:var(--danger)!important}
+
+/* Chart */
+.chart-height{min-height:560px}
+#aeaBarChart{width:100%}
+#aeaStatusDonut{width:100%;min-height:250px}
+
+/* Footer */
+.footer-note{
+  color:#a1acb8;text-align:center;font-size:11px;padding:18px 0 4px;
+}
+
+/* Mobile */
+@media(max-width:1199px){
+  :root{--sidebar-width:230px}
+}
+@media(max-width:991px){
+  .menu{transform:translateX(-100%);transition:.2s ease}
+  .menu.open{transform:translateX(0)}
+  .layout-page{margin-left:0}
+  .menu-toggle{display:block}
+  .navbar{gap:12px}
+  .navbar-search{flex:1;max-width:320px}
+}
+@media(max-width:767px){
+  .content-wrapper{padding:16px}
+  .navbar{padding:0 15px}
+  .navbar-search{width:180px}
+  .stat-card .card-body{min-height:110px}
+  .stat-value{font-size:22px}
+  .chart-height{min-height:430px}
+  .card-header{padding:12px 14px}
+  .card-body{padding:14px}
+  .filter-bar input{min-width:140px!important;width:100%}
+}
+@media(max-width:480px){
+  .navbar-search{display:none}
+  .page-title{font-size:20px}
+  .stat-value{font-size:20px}
+}
+</style>
+
+
+<style>
+  /* Activity Overview content helpers; existing uploaded CSS remains untouched. */
+  .activity-filter-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:22px 28px;
+  }
+  .activity-field label{
+    display:block;
+    color:#566a7f;
+    font-size:13px;
+    font-weight:500;
+    margin-bottom:8px;
+  }
+  .activity-control{
+    width:100%;
+    height:44px;
+    border:1px solid #d9dee3;
+    border-radius:7px;
+    padding:0 13px;
+    background:#fff;
+    color:#718297;
+    font-size:14px;
+    outline:none;
+  }
+  .activity-control:focus{
+    border-color:#696cff;
+    box-shadow:0 0 0 .15rem rgba(105,108,255,.12);
+  }
+  .activity-date{position:relative}
+  .activity-date i{
+    position:absolute;right:12px;top:13px;
+    color:#8592a3;pointer-events:none;
+  }
+  .activity-submit-wrap{text-align:center;margin-top:20px}
+  .activity-submit{
+    min-width:138px;height:42px;border:0;border-radius:7px;
+    background:#696cff;color:#fff;font-size:15px;font-weight:600;
+    box-shadow:0 4px 9px rgba(105,108,255,.18);cursor:pointer;
+  }
+  .activity-kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  .activity-kpi{
+    padding:16px;
+    border:1px solid #e7e7e8;
+    border-radius:8px;
+    background:#fff;
+    box-shadow:0 .125rem .25rem rgba(161,172,184,.08);
+  }
+  .activity-kpi-label{
+    font-size:10px;text-transform:uppercase;
+    color:#8592a3;letter-spacing:.04em;
+  }
+  .activity-kpi-value{
+    font-size:24px;font-weight:600;color:#566a7f;margin-top:4px;
+  }
+  .activity-kpi-note{font-size:11px;color:#8592a3;margin-top:3px}
+  .activity-empty{
+    padding:22px!important;text-align:center;color:#8592a3;
+  }
+  .activity-search{width:230px}
+  .activity-link{color:#696cff;font-size:11px}
+  @media(max-width:1000px){
+    .activity-filter-grid{grid-template-columns:repeat(2,1fr)}
+    .activity-kpis{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .activity-filter-grid,.activity-kpis{grid-template-columns:1fr}
+    .activity-search{width:100%}
+  }
+</style>
+
 </head>
+
 <body>
 
-
 <aside class="menu" id="layoutMenu">
-  <a href="dashboard.html" class="app-brand">
+  <a href="index.html" class="app-brand">
     <div class="app-brand-logo">🌱</div>
     <span class="app-brand-text">krishi sarathi</span>
   </a>
+
   <ul class="menu-inner">
-    <li class="menu-item"><a href="dashboard.html" class="menu-link"><i class="menu-icon bx bx-home-circle"></i><div>Dashboard</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-group"></i><div>Users</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-collection"></i><div>Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-layer"></i><div>Application Master</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-key"></i><div>Role Permissions Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-id-card"></i><div>User Role Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-news"></i><div>Agri News Manager</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-task"></i><div>Activities</div></a></li>
+    <li class="menu-item active"><a href="index.html" class="menu-link"><i class="menu-icon bx bx-home-circle"></i><div>Dashboard</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-group"></i><div>Users</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-collection"></i><div>Master</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-layer"></i><div>Application Master</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-key"></i><div>Role Permissions Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-id-card"></i><div>User Role Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-news"></i><div>Agri News Manager</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-task"></i><div>Activities</div></a></li>
     <li class="menu-header">Report</li>
-    <li class="menu-item"><a href="attendance-report.html" class="menu-link"><i class="menu-icon bx bx-user-check"></i><div>Attendance</div></a></li><li class="menu-item active"><a href="task-monitoring.html" class="menu-link"><i class="menu-icon bx bx-bar-chart-alt-2"></i><div>Activity Overview</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-line-chart"></i><div>Activity Summary</div></a></li><li class="menu-item"><a href="recent-submissions.html" class="menu-link"><i class="menu-icon bx bx-check-double"></i><div>Completed Activity</div></a></li><li class="menu-item"><a href="disease-surveillance.html" class="menu-link"><i class="menu-icon bx bx-bug"></i><div>Pest / Diseases</div></a></li><li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-help-circle"></i><div>Query Summary</div></a></li>
+    <li class="menu-item"><a href="district_wise_circle_aea_drilldown.html" class="menu-link"><i class="menu-icon bx bx-user-check"></i><div>Attendance</div></a></li>
+    <li class="menu-item"><a href="task-monitoring.html" class="menu-link"><i class="menu-icon bx bx-bar-chart-alt-2"></i><div>Activity Overview</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-line-chart"></i><div>Activity Summary</div></a></li>
+    <li class="menu-item"><a href="recent-submissions.html" class="menu-link"><i class="menu-icon bx bx-check-double"></i><div>Completed Activity</div></a></li>
+    <li class="menu-item"><a href="disease-surveillance.html" class="menu-link"><i class="menu-icon bx bx-bug"></i><div>Pest / Diseases</div></a></li>
+    <li class="menu-item"><a href="#" class="menu-link"><i class="menu-icon bx bx-help-circle"></i><div>Query Summary</div></a></li>
   </ul>
 </aside>
 
 <div class="layout-page">
-  
+
 <nav class="navbar">
   <button class="menu-toggle" id="menuToggle"><i class="bx bx-menu"></i></button>
   <div class="navbar-search">
     <i class="bx bx-search"></i>
-    <input type="text" placeholder="Search..." />
+    <input type="text" id="globalSearch" placeholder="Search...">
   </div>
   <div class="d-flex align-items-center gap-3">
     <i class="bx bx-bell fs-5 text-secondary"></i>
@@ -41,129 +396,497 @@
   </div>
 </nav>
 
-  <div class="content-wrapper">
-    <div class="breadcrumb-style1 text-muted"><a href="dashboard.html">Dashboard</a><span class="sep">/</span>Task Monitoring</div>
-    
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+
+<div class="content-wrapper">
+
+  <div class="breadcrumb-style1 text-muted">
+    <a href="index.html">Dashboard</a>
+    <span class="sep">/</span>
+    Activity Overview
+  </div>
+
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+    <div>
+      <h4 class="page-title">Reports of overall activity</h4>
+      <p class="page-sub">View activity submissions by district, circle, task, scheme, status and field officer.</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-sm btn-outline-secondary" id="exportCsv">
+        <i class="bx bx-download"></i> Export
+      </button>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link">
+    <i class="bx bx-arrow-back"></i> Back to dashboard
+  </a>
+
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="activity-filter-grid">
+
+        <div class="activity-field">
+          <label>SELECT DISTRICT</label>
+          <select id="districtFilter" class="activity-control">
+            <option value="all">All</option>
+            <option>Kamrup (Metro)</option>
+            <option>Dibrugarh</option>
+            <option>Dhemaji</option>
+            <option>Chirang</option>
+            <option>Nagaon</option>
+            <option>Jorhat</option>
+            <option>Sonitpur</option>
+            <option>Dima Hasao</option>
+            <option>Cachar</option>
+            <option>Nalbari</option>
+            <option>Morigaon</option>
+            <option>Tamulpur</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>SELECT CIRCLE</label>
+          <select id="circleFilter" class="activity-control">
+            <option value="all">All</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>SELECT TASK</label>
+          <select id="taskFilter" class="activity-control">
+            <option value="all">All</option>
+            <option>Visit to Demonstration Plots</option>
+            <option>Pest and Disease Monitoring</option>
+            <option>Seed and Input Distribution under Agriculture and Horticulture Schemes</option>
+            <option>PMFBY</option>
+            <option>Conducting Farmers Training and Awareness Programme</option>
+            <option>Flood and Drought Report</option>
+            <option>Geo-tagging and Inspection Under PMKSY</option>
+            <option>Community Nursery</option>
+            <option>Asset / Infrastructure Monitoring</option>
+            <option>Crop Cutting Experiment</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>SELECT SCHEME</label>
+          <select id="schemeFilter" class="activity-control">
+            <option value="all">All</option>
+            <option>PM-KISAN</option>
+            <option>PMFBY</option>
+            <option>PMKSY</option>
+            <option>Agriculture & Horticulture Schemes</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>SELECT STATUS</label>
+          <select id="statusFilter" class="activity-control">
+            <option value="all">All</option>
+            <option>Completed</option>
+            <option>Pending</option>
+            <option>Draft</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>SELECT FIELD OFFICER</label>
+          <select id="officerFilter" class="activity-control">
+            <option value="all">All</option>
+          </select>
+        </div>
+
+        <div class="activity-field">
+          <label>FROM DATE</label>
+          <div class="activity-date">
+            <input id="fromDate" type="date" class="activity-control">
+            <i class="bx bx-calendar"></i>
+          </div>
+        </div>
+
+        <div class="activity-field">
+          <label>TO DATE</label>
+          <div class="activity-date">
+            <input id="toDate" type="date" class="activity-control">
+            <i class="bx bx-calendar"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="activity-submit-wrap">
+        <button class="activity-submit" id="submitFilter">
+          <i class="bx bx-filter-alt"></i> Submit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-kpis mb-3">
+    <div class="activity-kpi">
+      <div class="activity-kpi-label">Total Tasks</div>
+      <div class="activity-kpi-value" id="totalTasks">12</div>
+      <div class="activity-kpi-note">Current filtered result</div>
+    </div>
+    <div class="activity-kpi">
+      <div class="activity-kpi-label">Completed</div>
+      <div class="activity-kpi-value" id="completedTasks">8</div>
+      <div class="activity-kpi-note">Completed activity records</div>
+    </div>
+    <div class="activity-kpi">
+      <div class="activity-kpi-label">Pending</div>
+      <div class="activity-kpi-value" id="pendingTasks">3</div>
+      <div class="activity-kpi-note">Requires follow-up</div>
+    </div>
+    <div class="activity-kpi">
+      <div class="activity-kpi-label">Draft</div>
+      <div class="activity-kpi-value" id="draftTasks">1</div>
+      <div class="activity-kpi-note">Not submitted yet</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
       <div>
-        <h4 class="page-title">Task Monitoring</h4>
-        <p class="page-sub">Submission and completion pipeline · Sat, 09 Aug 2026</p>
+        <span>Task Details</span>
+        <div class="small text-muted mt-1" id="resultNote">
+          Data shown is for today unless filters are applied.
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input id="searchInput" class="activity-search" type="text" placeholder="Search task, officer, district...">
       </div>
     </div>
 
-    
-    <a href="dashboard.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to dashboard</a>
+    <div class="table-responsive">
+      <table class="table mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>TITLE</th>
+            <th>OFFICER</th>
+            <th>DISTRICT</th>
+            <th>CIRCLE</th>
+            <th>SCHEME</th>
+            <th>SUBMITTED AT</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+        <tbody id="taskTable">
+          
+<tr data-district="Kamrup (Metro)" data-circle="Dispur" data-task="Visit to Demonstration Plots"
+    data-scheme="PM-KISAN" data-status="Completed" data-officer="Ritu Bora">
+  <td>1</td>
+  <td class="fw-semibold">Visit to Demonstration Plots</td>
+  <td>Ritu Bora</td>
+  <td>Kamrup (Metro)</td>
+  <td>Dispur</td>
+  <td>PM-KISAN</td>
+  <td>09 Aug 2026, 09:38 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
 
-    <div class="row g-3">
-      <div class="col-lg-5">
-        <div class="card mb-3">
-          <div class="card-header">Pipeline Status</div>
-          <div class="card-body">
-            <div class="mb-3">
-              <div class="d-flex justify-content-between small mb-1"><span>Submitted</span><span>3562</span></div>
-              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:100%;background:#696cff;"></div></div>
-            </div>
-            <div class="mb-3">
-              <div class="d-flex justify-content-between small mb-1"><span>Under Review</span><span>428</span></div>
-              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:12%;background:#00bad1;"></div></div>
-            </div>
-            <div class="mb-3">
-              <div class="d-flex justify-content-between small mb-1"><span>Completed</span><span>2867</span></div>
-              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:80%;background:#28c76f;"></div></div>
-            </div>
-            <div class="mb-3">
-              <div class="d-flex justify-content-between small mb-1"><span>Rejected / Rework</span><span>267</span></div>
-              <div class="progress" style="height:8px;"><div class="progress-bar" style="width:7%;background:#ff424f;"></div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <div class="card mb-3">
-          <div class="card-header">Completion Share</div>
-          <div class="card-body"><div id="taskDonut2"></div></div>
-        </div>
-      </div>
-      <div class="col-lg-3">
-        <div class="card mb-3">
-          <div class="card-header">SLA</div>
-          <div class="card-body">
-            <div class="mini-stat mb-2"><div class="v">2.4 days</div><div class="l">Avg. time to complete</div></div>
-            <div class="mini-stat"><div class="v">94</div><div class="l">Tasks overdue &gt; 5 days</div></div>
-          </div>
-        </div>
+<tr data-district="Dibrugarh" data-circle="Dibrugarh Sadar" data-task="Pest and Disease Monitoring"
+    data-scheme="Agriculture & Horticulture Schemes" data-status="Completed" data-officer="Simanta Nath">
+  <td>2</td>
+  <td class="fw-semibold">Pest and Disease Monitoring</td>
+  <td>Simanta Nath</td>
+  <td>Dibrugarh</td>
+  <td>Dibrugarh Sadar</td>
+  <td>Agriculture & Horticulture Schemes</td>
+  <td>09 Aug 2026, 09:44 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Dhemaji" data-circle="Dhemaji Sadar" data-task="Seed and Input Distribution under Agriculture and Horticulture Schemes"
+    data-scheme="Agriculture & Horticulture Schemes" data-status="Pending" data-officer="Pallabi Pathak">
+  <td>3</td>
+  <td class="fw-semibold">Seed and Input Distribution under Agriculture and Horticulture Schemes</td>
+  <td>Pallabi Pathak</td>
+  <td>Dhemaji</td>
+  <td>Dhemaji Sadar</td>
+  <td>Agriculture & Horticulture Schemes</td>
+  <td>09 Aug 2026, 09:51 AM</td>
+  <td><span class="badge-pill bg-label-warning">Pending</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Tamulpur" data-circle="Tamulpur" data-task="PMFBY"
+    data-scheme="PMFBY" data-status="Completed" data-officer="Anima Barman">
+  <td>4</td>
+  <td class="fw-semibold">PMFBY</td>
+  <td>Anima Barman</td>
+  <td>Tamulpur</td>
+  <td>Tamulpur</td>
+  <td>PMFBY</td>
+  <td>09 Aug 2026, 10:02 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Morigaon" data-circle="Morigaon" data-task="Conducting Farmers Training and Awareness Programme"
+    data-scheme="PM-KISAN" data-status="Completed" data-officer="Debojit Pathak">
+  <td>5</td>
+  <td class="fw-semibold">Conducting Farmers Training and Awareness Programme</td>
+  <td>Debojit Pathak</td>
+  <td>Morigaon</td>
+  <td>Morigaon</td>
+  <td>PM-KISAN</td>
+  <td>09 Aug 2026, 10:08 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Jorhat" data-circle="Jorhat East" data-task="Flood and Drought Report"
+    data-scheme="PMKSY" data-status="Pending" data-officer="Nilakshi Kalita">
+  <td>6</td>
+  <td class="fw-semibold">Flood and Drought Report</td>
+  <td>Nilakshi Kalita</td>
+  <td>Jorhat</td>
+  <td>Jorhat East</td>
+  <td>PMKSY</td>
+  <td>09 Aug 2026, 10:14 AM</td>
+  <td><span class="badge-pill bg-label-warning">Pending</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Dima Hasao" data-circle="Haflong" data-task="Geo-tagging and Inspection Under PMKSY"
+    data-scheme="PMKSY" data-status="Completed" data-officer="Juri Medhi">
+  <td>7</td>
+  <td class="fw-semibold">Geo-tagging and Inspection Under PMKSY</td>
+  <td>Juri Medhi</td>
+  <td>Dima Hasao</td>
+  <td>Haflong</td>
+  <td>PMKSY</td>
+  <td>09 Aug 2026, 10:18 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Nagaon" data-circle="Nagaon Sadar" data-task="Community Nursery"
+    data-scheme="Agriculture & Horticulture Schemes" data-status="Draft" data-officer="Ankur Baruah">
+  <td>8</td>
+  <td class="fw-semibold">Community Nursery</td>
+  <td>Ankur Baruah</td>
+  <td>Nagaon</td>
+  <td>Nagaon Sadar</td>
+  <td>Agriculture & Horticulture Schemes</td>
+  <td>09 Aug 2026, 10:23 AM</td>
+  <td><span class="badge-pill bg-label-primary">Draft</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Sonitpur" data-circle="Sonitpur North" data-task="Asset / Infrastructure Monitoring"
+    data-scheme="Agriculture & Horticulture Schemes" data-status="Completed" data-officer="Priyanka Bora">
+  <td>9</td>
+  <td class="fw-semibold">Asset / Infrastructure Monitoring</td>
+  <td>Priyanka Bora</td>
+  <td>Sonitpur</td>
+  <td>Sonitpur North</td>
+  <td>Agriculture & Horticulture Schemes</td>
+  <td>09 Aug 2026, 10:31 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Cachar" data-circle="Silchar" data-task="Crop Cutting Experiment"
+    data-scheme="PMFBY" data-status="Completed" data-officer="Pallabi Konwar">
+  <td>10</td>
+  <td class="fw-semibold">Crop Cutting Experiment</td>
+  <td>Pallabi Konwar</td>
+  <td>Cachar</td>
+  <td>Silchar</td>
+  <td>PMFBY</td>
+  <td>09 Aug 2026, 10:40 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Nalbari" data-circle="Nalbari" data-task="Visit to Demonstration Plots"
+    data-scheme="PM-KISAN" data-status="Completed" data-officer="Rina Dutta">
+  <td>11</td>
+  <td class="fw-semibold">Visit to Demonstration Plots</td>
+  <td>Rina Dutta</td>
+  <td>Nalbari</td>
+  <td>Nalbari</td>
+  <td>PM-KISAN</td>
+  <td>09 Aug 2026, 10:46 AM</td>
+  <td><span class="badge-pill bg-label-success">Completed</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+<tr data-district="Chirang" data-circle="Bengtol" data-task="Pest and Disease Monitoring"
+    data-scheme="PMKSY" data-status="Pending" data-officer="Rajib Sarma">
+  <td>12</td>
+  <td class="fw-semibold">Pest and Disease Monitoring</td>
+  <td>Rajib Sarma</td>
+  <td>Chirang</td>
+  <td>Bengtol</td>
+  <td>PMKSY</td>
+  <td>09 Aug 2026, 10:52 AM</td>
+  <td><span class="badge-pill bg-label-warning">Pending</span></td>
+  <td><a href="#" class="activity-link view-task">View</a></td>
+</tr>
+
+        </tbody>
+      </table>
+
+      <div id="noResults" class="activity-empty d-none">
+        Please use the filters and click Submit to see results.
       </div>
     </div>
 
-    <div class="card mt-1 mb-3">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <span>Top ADO Circles by Submissions</span>
-        <a href="tasks-completed.html" class="btn btn-sm btn-outline-primary">Completion Breakdown</a>
-      </div>
-      <div class="table-responsive">
-        <table class="table mb-0">
-          <thead><tr><th>ADO Circle</th><th>Submitted</th><th>Completed</th><th>%</th></tr></thead>
-          <tbody>
-            <tr>
-              <td class="fw-semibold">Guwahati ADO Circle</td>
-              <td>214</td>
-              <td>189</td>
-              <td><span class="badge-pill bg-label-warning">88%</span></td>
-            </tr>
-            <tr>
-              <td class="fw-semibold">Dibrugarh Sadar ADO Circle</td>
-              <td>198</td>
-              <td>175</td>
-              <td><span class="badge-pill bg-label-warning">88%</span></td>
-            </tr>
-            <tr>
-              <td class="fw-semibold">Nagaon Sadar ADO Circle</td>
-              <td>176</td>
-              <td>121</td>
-              <td><span class="badge-pill bg-label-danger">69%</span></td>
-            </tr>
-            <tr>
-              <td class="fw-semibold">Dhemaji ADO Circle</td>
-              <td>142</td>
-              <td>89</td>
-              <td><span class="badge-pill bg-label-danger">63%</span></td>
-            </tr>
-            <tr>
-              <td class="fw-semibold">Rani ADO Circle</td>
-              <td>133</td>
-              <td>108</td>
-              <td><span class="badge-pill bg-label-warning">81%</span></td>
-            </tr>
-            <tr>
-              <td class="fw-semibold">Jorhat East ADO Circle</td>
-              <td>120</td>
-              <td>101</td>
-              <td><span class="badge-pill bg-label-warning">84%</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+      <div class="small text-muted" id="tableInfo">Showing 12 records</div>
+      <div class="small text-muted">Activity Overview</div>
     </div>
+  </div>
 
-    <div class="footer-note">Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam</div>
+  <div class="footer-note">
+    Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="common.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  new ApexCharts(document.querySelector('#taskDonut2'), {
-    series: [80, 12, 8],
-    chart: { type: 'donut', height: 230 },
-    labels: ['Completed', 'Under review', 'Rejected / rework'],
-    colors: ['#28c76f', '#00bad1', '#ff424f'],
-    legend: { position: 'bottom', fontSize: '12px' },
-    dataLabels: { enabled: true, style: { fontSize:'11px' } }
-  }).render();
+  const rows = Array.from(document.querySelectorAll('#taskTable tr'));
+
+  const districtFilter = document.getElementById('districtFilter');
+  const circleFilter = document.getElementById('circleFilter');
+  const taskFilter = document.getElementById('taskFilter');
+  const schemeFilter = document.getElementById('schemeFilter');
+  const statusFilter = document.getElementById('statusFilter');
+  const officerFilter = document.getElementById('officerFilter');
+  const searchInput = document.getElementById('searchInput');
+
+  document.getElementById('fromDate').value = '2026-08-01';
+  document.getElementById('toDate').value = '2026-08-09';
+
+  const circles = [...new Set(rows.map(r => r.dataset.circle))].sort();
+  circles.forEach(c => {
+    circleFilter.insertAdjacentHTML('beforeend', `<option>${c}</option>`);
+  });
+
+  const officers = [...new Set(rows.map(r => r.dataset.officer))].sort();
+  officers.forEach(o => {
+    officerFilter.insertAdjacentHTML('beforeend', `<option>${o}</option>`);
+  });
+
+  function updateCircleOptions() {
+    const selectedDistrict = districtFilter.value;
+    circleFilter.innerHTML = '<option value="all">All</option>';
+
+    const available = rows
+      .filter(r => selectedDistrict === 'all' || r.dataset.district === selectedDistrict)
+      .map(r => r.dataset.circle);
+
+    [...new Set(available)].sort().forEach(c => {
+      circleFilter.insertAdjacentHTML('beforeend', `<option>${c}</option>`);
+    });
+  }
+
+  districtFilter.addEventListener('change', updateCircleOptions);
+
+  function applyFilters() {
+    const district = districtFilter.value;
+    const circle = circleFilter.value;
+    const task = taskFilter.value;
+    const scheme = schemeFilter.value;
+    const status = statusFilter.value;
+    const officer = officerFilter.value;
+    const q = searchInput.value.trim().toLowerCase();
+
+    let total = 0, completed = 0, pending = 0, draft = 0;
+
+    rows.forEach(row => {
+      const show =
+        (district === 'all' || row.dataset.district === district) &&
+        (circle === 'all' || row.dataset.circle === circle) &&
+        (task === 'all' || row.dataset.task === task) &&
+        (scheme === 'all' || row.dataset.scheme === scheme) &&
+        (status === 'all' || row.dataset.status === status) &&
+        (officer === 'all' || row.dataset.officer === officer) &&
+        (!q || row.innerText.toLowerCase().includes(q));
+
+      row.style.display = show ? '' : 'none';
+
+      if (show) {
+        total++;
+        if (row.dataset.status === 'Completed') completed++;
+        if (row.dataset.status === 'Pending') pending++;
+        if (row.dataset.status === 'Draft') draft++;
+      }
+    });
+
+    document.getElementById('totalTasks').textContent = total;
+    document.getElementById('completedTasks').textContent = completed;
+    document.getElementById('pendingTasks').textContent = pending;
+    document.getElementById('draftTasks').textContent = draft;
+
+    document.getElementById('tableInfo').textContent =
+      total ? `Showing ${total} records` : 'No records found';
+
+    document.getElementById('resultNote').textContent =
+      total
+        ? `Showing ${total} matching task${total === 1 ? '' : 's'}.`
+        : 'Please change the filters and submit again.';
+
+    document.getElementById('noResults').classList.toggle('d-none', total !== 0);
+  }
+
+  document.getElementById('submitFilter').addEventListener('click', applyFilters);
+  searchInput.addEventListener('input', applyFilters);
+
+  document.querySelectorAll('.view-task').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const row = this.closest('tr');
+      alert(
+        'Task Details\\n\\n' +
+        'Title: ' + row.dataset.task + '\\n' +
+        'Officer: ' + row.dataset.officer + '\\n' +
+        'District: ' + row.dataset.district + '\\n' +
+        'Circle: ' + row.dataset.circle + '\\n' +
+        'Status: ' + row.dataset.status
+      );
+    });
+  });
+
+  document.getElementById('exportCsv').addEventListener('click', function () {
+    const visible = rows.filter(r => r.style.display !== 'none');
+    const data = [['#','Title','Officer','District','Circle','Scheme','Submitted At','Status']];
+
+    visible.forEach(r => {
+      data.push([
+        r.children[0].innerText.trim(),
+        r.children[1].innerText.trim(),
+        r.children[2].innerText.trim(),
+        r.children[3].innerText.trim(),
+        r.children[4].innerText.trim(),
+        r.children[5].innerText.trim(),
+        r.children[6].innerText.trim(),
+        r.children[7].innerText.trim()
+      ]);
+    });
+
+    const csv = data.map(row =>
+      row.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(',')
+    ).join('\\n');
+
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'activity-overview.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  applyFilters();
 });
 </script>
-
 </body>
 </html>

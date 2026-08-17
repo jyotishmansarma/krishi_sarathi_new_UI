@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Activity Submitted | Krishi Sarathi</title>
+<title>Circle-wise Submitted Count | Krishi Sarathi</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -329,107 +329,25 @@ button,input{font-family:inherit}
 
 
 <div class="content-wrapper">
-<div class="breadcrumb-style1 text-muted"><a href="index.html">Dashboard</a><span class="sep">/</span>Activity Submitted</div>
-<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3"><div><h4 class="page-title">Activity Submitted</h4><p class="page-sub">Activity-wise submitted count with screenshot names · 09 Aug 2026</p></div></div>
-<a href="index.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to dashboard</a>
-<div class="row g-3 mb-3">
-<div class="col-xl-3 col-sm-6 col-12"><div class="card stat-card h-100"><div class="card-body"><div><div class="stat-label">Submitted</div><div class="stat-value">3,562</div><div class="stat-sub text-muted">All activities</div></div><div class="avatar-stat bg-label-primary"><i class="bx bx-send"></i></div></div></div></div>
-<div class="col-xl-3 col-sm-6 col-12"><div class="card stat-card h-100"><div class="card-body"><div><div class="stat-label">Completed</div><div class="stat-value">2,867</div><div class="stat-sub" style="color:#28c76f">80.5% completion</div></div><div class="avatar-stat bg-label-success"><i class="bx bx-check-circle"></i></div></div></div></div>
-<div class="col-xl-3 col-sm-6 col-12"><div class="card stat-card h-100"><div class="card-body"><div><div class="stat-label">Pending</div><div class="stat-value">695</div><div class="stat-sub text-muted">In review</div></div><div class="avatar-stat bg-label-warning"><i class="bx bx-time-five"></i></div></div></div></div>
-<div class="col-xl-3 col-sm-6 col-12"><div class="card stat-card h-100"><div class="card-body"><div><div class="stat-label">Activities</div><div class="stat-value">9</div><div class="stat-sub text-muted">Screenshot file names</div></div><div class="avatar-stat bg-label-info"><i class="bx bx-image"></i></div></div></div></div>
+<div class="breadcrumb-style1 text-muted"><a href="index.html">Dashboard</a><span class="sep">/</span><a href="district-wise-submitted.html">District-wise</a><span class="sep">/</span>Circle-wise</div>
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3"><div><h4 class="page-title">Circle-wise Submitted Count</h4><p class="page-sub" id="subtitle">Select a circle to continue to AEA-wise details.</p></div></div>
+<a href="district-wise-submitted.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to district-wise</a>
+<div class="card mb-3"><div class="card-header d-flex justify-content-between align-items-center"><span id="districtTitle">District</span><span class="small text-muted">Demo submitted counts</span></div>
+<div class="table-responsive"><table class="table mb-0"><thead><tr><th>#</th><th>Circle</th><th>Submitted Count</th><th>Share</th><th></th></tr></thead><tbody id="circleTable"></tbody></table></div></div>
+<div class="footer-note">Demo data for UI presentation · Krishi Sarathi &copy; 2026</div>
 </div>
-<div class="card mb-3"><div class="card-header d-flex justify-content-between align-items-center"><span>Activity-wise Submitted Count</span><div class="filter-bar"><input id="q" placeholder="Search activity..." style="min-width:210px"></div></div>
-<div class="table-responsive"><table class="table mb-0"><thead><tr><th>#</th><th>Activity / Screenshot</th><th>Submitted</th><th>Completed</th><th>Progress</th><th>%</th><th></th></tr></thead><tbody id="activityTable">
-<tr>
-<td>1</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Fertilizer Stock Verification</div><div class="small text-muted">Screenshot: fertilizer-stock-verification.jpg</div></div></div></td>
-<td>612</td><td>588</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-success" style="width:96%"></div></div></td>
-<td><span class="badge-pill bg-label-success">96%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Fertilizer Stock Verification">View District →</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Farmer Field School Sessions</div><div class="small text-muted">Screenshot: farmer-field-school.jpg</div></div></div></td>
-<td>480</td><td>401</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:84%"></div></div></td>
-<td><span class="badge-pill bg-label-warning">84%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Farmer Field School Sessions">View District →</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Pest Surveillance Visits</div><div class="small text-muted">Screenshot: pest-surveillance.jpg</div></div></div></td>
-<td>540</td><td>512</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-success" style="width:95%"></div></div></td>
-<td><span class="badge-pill bg-label-success">95%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Pest Surveillance Visits">View District →</a></td>
-</tr>
-<tr>
-<td>4</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Soil Health Card Distribution</div><div class="small text-muted">Screenshot: soil-health-card.jpg</div></div></div></td>
-<td>390</td><td>298</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:76%"></div></div></td>
-<td><span class="badge-pill bg-label-warning">76%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Soil Health Card Distribution">View District →</a></td>
-</tr>
-<tr>
-<td>5</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Scheme Awareness Camps (PM-KISAN)</div><div class="small text-muted">Screenshot: pm-kisan-awareness.jpg</div></div></div></td>
-<td>310</td><td>276</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:89%"></div></div></td>
-<td><span class="badge-pill bg-label-warning">89%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Scheme Awareness Camps (PM-KISAN)">View District →</a></td>
-</tr>
-<tr>
-<td>6</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Seed Quality Inspection</div><div class="small text-muted">Screenshot: seed-quality-inspection.jpg</div></div></div></td>
-<td>275</td><td>249</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-success" style="width:91%"></div></div></td>
-<td><span class="badge-pill bg-label-success">91%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Seed Quality Inspection">View District →</a></td>
-</tr>
-<tr>
-<td>7</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Irrigation Infrastructure Audit</div><div class="small text-muted">Screenshot: irrigation-audit.jpg</div></div></div></td>
-<td>240</td><td>205</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:85%"></div></div></td>
-<td><span class="badge-pill bg-label-warning">85%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Irrigation Infrastructure Audit">View District →</a></td>
-</tr>
-<tr>
-<td>8</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Kisan Credit Card Facilitation</div><div class="small text-muted">Screenshot: kcc-facilitation.jpg</div></div></div></td>
-<td>400</td><td>315</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:79%"></div></div></td>
-<td><span class="badge-pill bg-label-warning">79%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Kisan Credit Card Facilitation">View District →</a></td>
-</tr>
-<tr>
-<td>9</td>
-<td><div class="d-flex align-items-center gap-2"><div class="screenshot-box"><i class="bx bx-image"></i></div>
-<div><div class="fw-semibold">Crop Cutting Experiments</div><div class="small text-muted">Screenshot: crop-cutting-experiments.jpg</div></div></div></td>
-<td>315</td><td>23</td>
-<td style="min-width:150px"><div class="progress" style="height:7px"><div class="progress-bar bg-danger" style="width:7%"></div></div></td>
-<td><span class="badge-pill bg-label-danger">7%</span></td>
-<td><a class="drill-link" href="district-wise-submitted.html?activity=Crop Cutting Experiments">View District →</a></td>
-</tr></tbody></table></div></div>
-<div class="footer-note">Krishi Sarathi &copy; 2026 — Directorate of Agriculture, Government of Assam</div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="common.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded',function(){
-const q=document.getElementById('q'),rows=[...document.querySelectorAll('#activityTable tr')];
-q.addEventListener('input',()=>rows.forEach(r=>r.style.display=!q.value||r.innerText.toLowerCase().includes(q.value.toLowerCase())?'':'none'));
+const data={"Kamrup (Metro)": [["Dispur", 37], ["Sonapur", 27], ["Chandrapur", 13]], "Dibrugarh": [["Dibrugarh Sadar", 40], ["Naharkatia", 19]], "Nagaon": [["Nagaon Sadar", 42], ["Raha", 18]], "Dhemaji": [["Dhemaji Sadar", 20], ["Jonai", 15]], "Chirang": [["Bengtol", 18], ["Bijni", 17], ["Sidli", 13]]};
+const p=new URLSearchParams(location.search);
+const d=p.get('district')||'Kamrup (Metro)';
+document.getElementById('districtTitle').textContent=d+' — Circle-wise Submitted Count';
+const arr=data[d]||[];
+const total=arr.reduce((s,x)=>s+x[1],0);
+const tb=document.getElementById('circleTable');
+arr.forEach((x,i)=>{const pct=(x[1]/total*100).toFixed(1);tb.insertAdjacentHTML('beforeend',`<tr><td>${i+1}</td><td class="fw-semibold">${x[0]}</td><td class="fw-semibold">${x[1]}</td><td><span class="badge-pill bg-label-success">${pct}% share</span></td><td><a class="text-primary small" href="aea-wise-submitted.html?district=${encodeURIComponent(d)}&circle=${encodeURIComponent(x[0])}">View AEA →</a></td></tr>`);});
 });
 </script>
 </body>
