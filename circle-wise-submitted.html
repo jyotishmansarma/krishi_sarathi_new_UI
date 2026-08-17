@@ -333,7 +333,7 @@ button,input{font-family:inherit}
 <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3"><div><h4 class="page-title">Circle-wise Submitted Count</h4><p class="page-sub" id="subtitle">Select a circle to continue to AEA-wise details.</p></div></div>
 <a href="district-wise-submitted.html" class="back-link"><i class="bx bx-arrow-back"></i> Back to district-wise</a>
 <div class="card mb-3"><div class="card-header d-flex justify-content-between align-items-center"><span id="districtTitle">District</span><span class="small text-muted">Demo submitted counts</span></div>
-<div class="table-responsive"><table class="table mb-0"><thead><tr><th>#</th><th>Circle</th><th>Submitted Count</th><th>Share</th><th></th></tr></thead><tbody id="circleTable"></tbody></table></div></div>
+<div class="table-responsive"><table class="table mb-0"><thead><tr><th>#</th><th>Circle</th><th>Submitted Count</th><th></th><th></th></tr></thead><tbody id="circleTable"></tbody></table></div></div>
 <div class="footer-note">Demo data for UI presentation · Krishi Sarathi &copy; 2026</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -347,7 +347,7 @@ document.getElementById('districtTitle').textContent=d+' — Circle-wise Submitt
 const arr=data[d]||[];
 const total=arr.reduce((s,x)=>s+x[1],0);
 const tb=document.getElementById('circleTable');
-arr.forEach((x,i)=>{const pct=(x[1]/total*100).toFixed(1);tb.insertAdjacentHTML('beforeend',`<tr><td>${i+1}</td><td class="fw-semibold">${x[0]}</td><td class="fw-semibold">${x[1]}</td><td><span class="badge-pill bg-label-success">${pct}% share</span></td><td><a class="text-primary small" href="aea-wise-submitted.html?district=${encodeURIComponent(d)}&circle=${encodeURIComponent(x[0])}">View AEA →</a></td></tr>`);});
+arr.forEach((x,i)=>{const pct=(x[1]/total*100).toFixed(1);tb.insertAdjacentHTML('beforeend',`<tr><td>${i+1}</td><td class="fw-semibold">${x[0]}</td><td class="fw-semibold">${x[1]}</td><td><span class="badge-pill bg-label-success"></span></td><td><a class="text-primary small" href="aea-wise-submitted.html?district=${encodeURIComponent(d)}&circle=${encodeURIComponent(x[0])}">View AEA →</a></td></tr>`);});
 });
 </script>
 </body>

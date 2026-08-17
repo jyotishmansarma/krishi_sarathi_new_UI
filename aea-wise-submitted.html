@@ -343,7 +343,7 @@ const data={"Kamrup (Metro)": {"Dispur": {"AEA-001": 14, "AEA-002": 12, "AEA-003
 const p=new URLSearchParams(location.search),d=p.get('district')||'Kamrup (Metro)',c=p.get('circle')||'Dispur',aeas=(data[d]&&data[d][c])||{};
 document.getElementById('path').textContent=d+' / '+c;
 const total=Object.values(aeas).reduce((s,v)=>s+v,0),tb=document.getElementById('aeaTable');
-Object.entries(aeas).forEach((x,i)=>{const pct=(x[1]/total*100).toFixed(1);tb.insertAdjacentHTML('beforeend',`<tr><td>${i+1}</td><td class="fw-semibold">${x[0]}</td><td class="fw-semibold">${x[1]}</td><td><span class="badge-pill bg-label-success">${pct}% share</span></td><td><a class="text-primary small" href="submitted-report.html?district=${encodeURIComponent(d)}&circle=${encodeURIComponent(c)}&aea=${encodeURIComponent(x[0])}">Full report →</a></td></tr>`);});
+Object.entries(aeas).forEach((x,i)=>{const pct=(x[1]/total*100).toFixed(1);tb.insertAdjacentHTML('beforeend',`<tr><td>${i+1}</td><td class="fw-semibold">${x[0]}</td><td class="fw-semibold">${x[1]}</td><td><span class="badge-pill bg-label-success"></span></td><td><a class="text-primary small" href="submitted-report.html?district=${encodeURIComponent(d)}&circle=${encodeURIComponent(c)}&aea=${encodeURIComponent(x[0])}">Full report →</a></td></tr>`);});
 });
 </script>
 </body>
